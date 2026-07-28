@@ -1,0 +1,263 @@
+.locator {
+  padding: 0 0 clamp(4.5rem, 7vw, 7rem);
+  background: var(--color-warm-gray);
+}
+
+.filters {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(14rem, 0.68fr) minmax(0, 1.32fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  margin-top: -48px;
+  color: var(--color-white);
+  background: var(--color-black);
+}
+
+.filterIntro {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.filterIntro svg {
+  flex: 0 0 auto;
+  width: 24px;
+  color: var(--color-gold-light);
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--color-gold-light);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.kickerLight {
+  margin-bottom: 1rem;
+}
+
+.filterIntro h2,
+.storeCard h3,
+.storeGrid :global(.no-results) h2,
+.retailer h2 {
+  font-family: var(--font-body);
+}
+
+.filterIntro h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.filterFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 0.85rem;
+}
+
+.filterFields label {
+  min-width: 0;
+}
+
+.filterFields label > span {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+}
+
+.filterFields select {
+  width: 100%;
+  height: 50px;
+  padding: 0 0.75rem;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0;
+  background: var(--color-charcoal);
+  font-size: 0.8rem;
+}
+
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  color: #766f66;
+  border-bottom: 1px solid rgba(8, 8, 8, 0.14);
+  font-size: 0.76rem;
+}
+
+.resultHeader p {
+  margin: 0;
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+.resultHeader span {
+  text-align: right;
+}
+
+.storeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(8, 8, 8, 0.13);
+  border-left: 1px solid rgba(8, 8, 8, 0.13);
+}
+
+.storeCard {
+  min-width: 0;
+  min-height: 275px;
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+  border-right: 1px solid rgba(8, 8, 8, 0.13);
+  border-bottom: 1px solid rgba(8, 8, 8, 0.13);
+  transition: background 250ms ease;
+}
+
+.storeCard:hover {
+  background: var(--color-white);
+}
+
+.storeIcon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  color: var(--color-gold-dark);
+}
+
+.storeIcon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.storeIcon span {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.storeCard > small {
+  color: var(--color-gold-dark);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.storeCard h3 {
+  margin: 0.65rem 0;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.storeCard > p {
+  color: #6f6960;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.storeCard > div:last-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 0.9rem;
+  color: #777067;
+  border-top: 1px solid rgba(8, 8, 8, 0.1);
+  font-size: 0.72rem;
+}
+
+.storeGrid :global(.no-results) {
+  border-right: 1px solid rgba(8, 8, 8, 0.13);
+  border-bottom: 1px solid rgba(8, 8, 8, 0.13);
+}
+
+.storeGrid :global(.no-results) h2 {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.retailer {
+  padding-block: clamp(4.5rem, 7vw, 6.5rem);
+  color: var(--color-white);
+  background: var(--color-warm-dark);
+}
+
+.retailerInner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.retailer h2 {
+  max-width: 17ch;
+  margin-bottom: 1rem;
+  font-size: clamp(2.35rem, 4.5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.retailer p {
+  max-width: 38rem;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 960px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .storeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .locator {
+    padding: 0 0 4rem;
+  }
+
+  .filters {
+    margin-top: -24px;
+  }
+
+  .filterFields {
+    grid-template-columns: 1fr;
+  }
+
+  .resultHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resultHeader span {
+    text-align: left;
+  }
+
+  .storeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .retailerInner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

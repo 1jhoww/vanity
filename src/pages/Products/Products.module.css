@@ -1,0 +1,226 @@
+.catalog {
+  color: var(--color-white);
+  background:
+    linear-gradient(180deg, #0c0d0c, var(--color-black) 32%),
+    var(--color-black);
+}
+
+.catalogIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+.catalogIntro h2 {
+  max-width: 16ch;
+  margin-bottom: 0;
+  font-family: var(--font-body);
+  font-size: clamp(2.2rem, 3.7vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.catalogIntro > p {
+  max-width: 34rem;
+  margin-bottom: 0;
+  color: rgba(248, 246, 239, 0.58);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 1rem;
+  color: var(--color-white);
+  border-block: 1px solid rgba(214, 189, 131, 0.18);
+  background: var(--color-charcoal);
+}
+
+.search {
+  min-width: min(100%, 320px);
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.7rem;
+  padding-inline: 0.9rem;
+  border-bottom: 1px solid rgba(214, 189, 131, 0.36);
+  transition:
+    border-color var(--duration-fast) var(--ease-soft),
+    box-shadow var(--duration-fast) var(--ease-soft);
+}
+
+.search:focus-within {
+  border-color: var(--color-gold-light);
+  box-shadow: 0 2px 0 rgba(214, 189, 131, 0.22);
+}
+
+.search svg {
+  flex: 0 0 auto;
+  color: var(--color-gold);
+}
+
+.search input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.75rem 0;
+  color: var(--color-white);
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.search input::placeholder {
+  color: rgba(248, 246, 239, 0.58);
+}
+
+.search button {
+  display: grid;
+  place-items: center;
+  padding: 0.35rem;
+  color: var(--color-gold-light);
+  border: 0;
+  background: transparent;
+}
+
+.filterGroup {
+  display: inline-flex;
+  border: 1px solid rgba(214, 189, 131, 0.23);
+  overflow: hidden;
+}
+
+.filterGroup button {
+  min-height: 42px;
+  padding: 0.65rem 0.8rem;
+  color: rgba(248, 246, 239, 0.62);
+  border: 0;
+  background: transparent;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  transition: color var(--duration-fast) var(--ease-soft), background var(--duration-fast) var(--ease-soft);
+}
+
+.filterGroup button + button {
+  border-left: 1px solid rgba(214, 189, 131, 0.18);
+}
+
+.filterGroup .active {
+  color: var(--color-black);
+  background: var(--color-gold);
+}
+
+.selectField > span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: rgba(248, 246, 239, 0.58);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+.selectField select {
+  height: 42px;
+  padding: 0 2rem 0 0.7rem;
+  color: var(--color-white);
+  border: 1px solid rgba(214, 189, 131, 0.23);
+  border-radius: 0;
+  background: #171916;
+  font-size: 0.76rem;
+}
+
+.selectField option {
+  color: var(--color-white);
+  background: #171916;
+}
+
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  color: rgba(248, 246, 239, 0.48);
+  font-size: 0.76rem;
+}
+
+.resultHeader p {
+  margin: 0;
+}
+
+.resultHeader strong {
+  color: var(--color-gold-light);
+}
+
+.resultHeader span {
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.list {
+  display: grid;
+}
+
+.list :global(.no-results) h2 {
+  margin-bottom: 0.8rem;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 2.2rem;
+}
+
+.list :global(.no-results) p {
+  color: rgba(248, 246, 239, 0.58);
+}
+
+.loadMore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 3rem;
+}
+
+.loadMore span {
+  color: rgba(248, 246, 239, 0.58);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 820px) {
+  .catalogIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filterGroup {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 620px) {
+  .filterGroup {
+    width: 100%;
+  }
+
+  .filterGroup button {
+    flex: 1;
+  }
+
+  .selectField select {
+    width: 100%;
+  }
+
+  .resultHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,39 @@
+.header {
+  max-width: 52rem;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+.header h2 {
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 3.8vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.header p {
+  max-width: 39rem;
+  margin-bottom: 0;
+  color: #55574f;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.72;
+}
+
+.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.center p {
+  margin-inline: auto;
+}
+
+.light h2 {
+  color: var(--color-white);
+}
+
+.light p {
+  color: rgba(255, 255, 255, 0.64);
+}
