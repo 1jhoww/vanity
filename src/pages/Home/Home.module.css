@@ -731,3 +731,174 @@
     min-height: 210px;
   }
 }
+
+/* Final institutional flow below the frozen Hero. */
+.fragranceGroups {
+  color: var(--color-white);
+  background: #070707;
+}
+
+.groupsHeader {
+  padding-block: clamp(5rem, 8vw, 8rem);
+}
+
+.groupsHeader > div {
+  max-width: 46rem;
+}
+
+.groupsHeader h2,
+.groupCopy h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+}
+
+.groupsHeader h2 {
+  margin-bottom: 1.15rem;
+  font-size: clamp(2.6rem, 4.8vw, 5rem);
+}
+
+.groupsHeader p {
+  max-width: 39rem;
+  margin-bottom: 0;
+  color: rgba(248, 246, 239, 0.66);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.72;
+}
+
+.groupsList {
+  display: grid;
+}
+
+.fragranceGroup {
+  padding-block: clamp(4.5rem, 7vw, 7rem);
+  background: #000;
+}
+
+.fragranceGroup:nth-child(2) {
+  background: #070707;
+}
+
+.fragranceGroup:nth-child(3),
+.fragranceGroup:nth-child(5) {
+  background: #0d0d0d;
+}
+
+.fragranceGroup:nth-child(4) {
+  background: #070707;
+}
+
+.fragranceGroup:last-child {
+  padding-bottom: clamp(7rem, 10vw, 10rem);
+}
+
+.groupInner {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr);
+  align-items: center;
+  gap: clamp(3rem, 7vw, 7rem);
+}
+
+.groupReverse .groupInner {
+  grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
+}
+
+.groupReverse .groupCopy {
+  order: -1;
+}
+
+.groupMedia {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 6 / 5;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.groupMedia picture,
+.groupMedia img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.groupMedia picture {
+  position: absolute;
+  inset: 0;
+}
+
+.groupMedia img {
+  aspect-ratio: 1023 / 1537;
+  object-fit: contain;
+}
+
+.groupCopy {
+  max-width: 31rem;
+}
+
+.groupCopy small {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--color-gold-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.groupCopy h3 {
+  margin-bottom: 1.15rem;
+  font-size: clamp(2.35rem, 4vw, 4.4rem);
+}
+
+.groupCopy p {
+  max-width: 29rem;
+  margin-bottom: 1.75rem;
+  color: rgba(248, 246, 239, 0.66);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+@media (max-width: 900px) {
+  .groupInner,
+  .groupReverse .groupInner {
+    grid-template-columns: 1fr;
+  }
+
+  .groupCopy,
+  .groupReverse .groupCopy {
+    order: -1;
+    max-width: 42rem;
+  }
+
+  .groupMedia {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 680px) {
+  .groupsHeader,
+  .fragranceGroup {
+    padding-block: 4.5rem;
+  }
+
+  .groupsHeader h2,
+  .groupCopy h3 {
+    font-size: clamp(2.2rem, 10vw, 3.15rem);
+  }
+
+  .groupInner {
+    gap: 2rem;
+  }
+
+  .groupMedia {
+    aspect-ratio: 2 / 3;
+  }
+
+  .fragranceGroup:last-child {
+    padding-bottom: 6.5rem;
+  }
+}

@@ -1,22 +1,54 @@
 import Button, {
   PrimaryButton,
-  SecondaryButton,
   TextLink
 } from "../../components/Button/Button";
 import Container from "../../components/Container/Container";
 import Reveal from "../../components/Reveal/Reveal";
 import SEO from "../../components/SEO/SEO";
-import { fragrances } from "../../data/products";
 import styles from "./Home.module.css";
 
-const availableVolumes = Array.from(
-  new Set(
-    fragrances
-      .filter((fragrance) => fragrance.available !== false)
-      .flatMap((fragrance) => fragrance.sizes.map((size) => size.volume))
-      .filter(Boolean)
-  )
-);
+const fragranceGroups = [
+  {
+    label: "Florais",
+    title: "Fragrâncias florais",
+    description:
+      "Perfis delicados e elegantes desenvolvidos para quem procura fragrâncias marcantes e sofisticadas.",
+    file: "florais",
+    alt: "Perfumes Flowers de 500 ml e 50 ml entre flores roxas"
+  },
+  {
+    label: "Frutadas",
+    title: "Fragrâncias frutadas",
+    description:
+      "Perfis vibrantes e expressivos, com combinações que trazem leveza, energia e personalidade ao cuidado diário.",
+    file: "frutadas",
+    alt: "Perfumes Mango de 500 ml e Strawberry de 50 ml entre frutas"
+  },
+  {
+    label: "Doces / Gourmand",
+    title: "Fragrâncias doces e gourmand",
+    description:
+      "Composições envolventes e acolhedoras, com presença adocicada para momentos de cuidado memoráveis.",
+    file: "doces",
+    alt: "Perfumes Sweet de 500 ml e Illusion de 50 ml com chocolate, baunilha e caramelo"
+  },
+  {
+    label: "Frescas / Cítricas",
+    title: "Fragrâncias frescas e cítricas",
+    description:
+      "Perfis leves e luminosos, pensados para transmitir frescor e uma sensação limpa e revigorante.",
+    file: "citricas",
+    alt: "Perfumes Explosion de 500 ml e Citric de 50 ml com frutas cítricas"
+  },
+  {
+    label: "Intensas / Elegantes",
+    title: "Fragrâncias intensas e elegantes",
+    description:
+      "Fragrâncias de presença marcante e acabamento sofisticado, criadas para quem prefere uma assinatura mais intensa.",
+    file: "intensas",
+    alt: "Perfumes Gold de 500 ml e Black Vanity de 50 ml em composição preta e dourada"
+  }
+];
 
 function Home() {
   return (
@@ -82,146 +114,59 @@ function Home() {
         </Container>
       </section>
 
-      <section className={styles.profiles}>
-        <Container>
-          <Reveal className={styles.profilesHeader}>
+      <section className={styles.fragranceGroups}>
+        <Container className={styles.groupsHeader}>
+          <Reveal>
             <span className="eyebrow dark-eyebrow">Perfis de fragrância</span>
             <h2>Descubra diferentes perfis.</h2>
             <p>
-              De fragrâncias florais e delicadas a opções frutadas e marcantes,
-              o portfólio reúne diferentes propostas para estilos e momentos
-              diversos.
+              Um universo de fragrâncias para diferentes estilos, momentos e
+              formas de presença.
             </p>
           </Reveal>
-
-          <div className={styles.profileList}>
-            <article className={`${styles.profile} ${styles.profileFloral}`}>
-              <Reveal className={styles.profileCopy}>
-                <small>Perfil floral</small>
-                <h3>Fragrâncias florais</h3>
-                <p>
-                  Perfis delicados, elegantes e marcantes, criados para quem
-                  prefere uma presença floral no cuidado diário.
-                </p>
-                <PrimaryButton to="/produtos">Explorar perfumes</PrimaryButton>
-              </Reveal>
-              <Reveal className={styles.profileMedia} delay={80}>
-                <picture>
-                  <source
-                    srcSet="/images/home/fragrance-families/banner-flowers.webp"
-                    type="image/webp"
-                  />
-                  <img
-                    src="/images/home/fragrance-families/banner-flowers.png"
-                    alt="Perfumes Flowers de 500 ml e 50 ml em composição floral roxa"
-                    width="1536"
-                    height="1024"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </Reveal>
-            </article>
-
-            <article className={`${styles.profile} ${styles.profileFruit}`}>
-              <Reveal className={styles.profileCopy}>
-                <small>Perfil frutado</small>
-                <h3>Fragrâncias frutadas</h3>
-                <p>
-                  Opções mais vivas e expressivas, com propostas que trazem
-                  personalidade e presença.
-                </p>
-                <PrimaryButton to="/produtos">Explorar perfumes</PrimaryButton>
-              </Reveal>
-              <Reveal className={styles.profileMedia} delay={80}>
-                <picture>
-                  <source
-                    srcSet="/images/home/fragrance-families/banner-strawberry.webp"
-                    type="image/webp"
-                  />
-                  <img
-                    src="/images/home/fragrance-families/banner-strawberry.png"
-                    alt="Perfumes Strawberry de 500 ml e 50 ml com morangos"
-                    width="1536"
-                    height="1024"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </Reveal>
-            </article>
-          </div>
         </Container>
-      </section>
 
-      <section className={`section ${styles.formats}`}>
-        <Container className={styles.formatsGrid}>
-          <Reveal className={styles.formatCopy}>
-            <span className="eyebrow dark-eyebrow">
-              {availableVolumes.join(" · ")}
-            </span>
-            <h2>Diferentes apresentações para diferentes rotinas.</h2>
-            <p>
-              Consulte os formatos disponíveis em cada fragrância e conheça o
-              portfólio completo.
-            </p>
-            <PrimaryButton to="/produtos">Explorar o portfólio</PrimaryButton>
-          </Reveal>
-          <Reveal className={styles.formatDisplay} delay={80}>
-            <div role="list" aria-label="Apresentações disponíveis">
-              {availableVolumes.map((volume, index) => (
-                <article key={volume} role="listitem">
-                  <small>{String(index + 1).padStart(2, "0")}</small>
-                  <strong>{volume}</strong>
-                  <span>Apresentação disponível</span>
-                </article>
-              ))}
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section className={styles.professional}>
-        <div className={styles.professionalImage}>
-          <img
-            src="/campaign/professional-pet.webp"
-            alt="Profissional atendendo um cão"
-            width="1440"
-            height="960"
-            loading="lazy"
-          />
+        <div className={styles.groupsList}>
+          {fragranceGroups.map((group, index) => (
+            <article
+              className={[
+                styles.fragranceGroup,
+                index % 2 === 1 ? styles.groupReverse : ""
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              key={group.file}
+            >
+              <Container className={styles.groupInner}>
+                <Reveal className={styles.groupMedia} delay={80}>
+                  <picture>
+                    <source
+                      srcSet={`/images/home/fragrance-groups/${group.file}.webp`}
+                      type="image/webp"
+                    />
+                    <img
+                      src={`/images/home/fragrance-groups/${group.file}.png`}
+                      alt={group.alt}
+                      width="1023"
+                      height="1537"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </Reveal>
+                <Reveal className={styles.groupCopy}>
+                  <small>{group.label}</small>
+                  <h3>{group.title}</h3>
+                  <p>{group.description}</p>
+                  <PrimaryButton to="/produtos">
+                    Explorar perfumes
+                  </PrimaryButton>
+                </Reveal>
+              </Container>
+            </article>
+          ))}
         </div>
-        <Container className={styles.professionalGrid}>
-          <Reveal className={styles.professionalCopy}>
-            <span className="eyebrow dark-eyebrow">Mercado profissional</span>
-            <h2>Perfumes para o mercado profissional.</h2>
-            <p>
-              Conheça as apresentações disponíveis para groomers, pet shops e
-              distribuidores.
-            </p>
-            <PrimaryButton to="/contato">Falar com o comercial</PrimaryButton>
-          </Reveal>
-        </Container>
       </section>
-
-      <nav className={styles.finalLinks} aria-label="Atalhos principais">
-        <article className={styles.finalLink}>
-          <div>
-            <small>Onde encontrar</small>
-            <h2>Encontre um ponto de venda.</h2>
-          </div>
-          <PrimaryButton to="/onde-comprar">
-            Ver pontos de venda
-          </PrimaryButton>
-        </article>
-        <article className={styles.finalLink}>
-          <div>
-            <small>Contato</small>
-            <h2>Fale com a nossa equipe.</h2>
-          </div>
-          <SecondaryButton to="/contato">Entrar em contato</SecondaryButton>
-        </article>
-      </nav>
     </>
   );
 }
