@@ -1,4 +1,21 @@
 {
+  "redirects": [
+    {
+      "source": "/colecao",
+      "destination": "/fragrancias",
+      "permanent": true
+    },
+    {
+      "source": "/linhas",
+      "destination": "/fragrancias",
+      "permanent": true
+    },
+    {
+      "source": "/produtos",
+      "destination": "/fragrancias",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

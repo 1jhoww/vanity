@@ -1,0 +1,133 @@
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  overflow: clip;
+  color: var(--color-white);
+  border: 1px solid rgba(214, 189, 131, 0.12);
+  background: #0b0c0b;
+}
+
+.media {
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  background: #030403;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+.content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2.25rem, 5vw, 4.75rem);
+  background:
+    linear-gradient(145deg, rgba(183, 154, 92, 0.045), transparent 46%),
+    #0d0e0d;
+}
+
+.family {
+  margin-bottom: 0.9rem;
+  color: var(--color-gold);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.content h2 {
+  margin-bottom: 0.75rem;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: clamp(2.4rem, 4.4vw, 4.25rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.content .inspiration {
+  margin-bottom: 1rem;
+  color: var(--color-gold-light);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.5;
+}
+
+.content p {
+  max-width: 35rem;
+  margin-bottom: 1.4rem;
+  color: rgba(248, 246, 239, 0.64);
+  font-size: 0.96rem;
+  line-height: 1.72;
+}
+
+.volumes {
+  width: 100%;
+  padding-top: 1rem;
+  margin-bottom: 1.6rem;
+  color: rgba(248, 246, 239, 0.52);
+  border-top: 1px solid rgba(214, 189, 131, 0.14);
+  font-size: 0.76rem;
+}
+
+.action {
+  min-width: 136px;
+}
+
+.reverse .media {
+  grid-column: 2;
+}
+
+.reverse .content {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+@media (max-width: 860px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .reverse .media,
+  .reverse .content {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  .content {
+    padding: clamp(1.75rem, 6vw, 3rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .content h2 {
+    font-size: clamp(2.1rem, 11vw, 3rem);
+  }
+
+  .content p {
+    font-size: 0.9rem;
+  }
+
+  .action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .image {
+    transition: none;
+  }
+}

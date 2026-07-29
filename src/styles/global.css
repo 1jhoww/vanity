@@ -53,7 +53,7 @@ html {
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
@@ -135,23 +135,27 @@ button {
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 1rem;
+  gap: 1.15rem;
   color: var(--color-white);
-  background: radial-gradient(circle at 50% 42%, #25271f, var(--color-black) 58%);
+  background: #000;
 }
 
-.page-loader span {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  letter-spacing: 0.02em;
+.page-loader__brand {
+  display: block;
+}
+
+.page-loader__brand img {
+  width: clamp(8.5rem, 24vw, 10.5rem);
+  height: auto;
+  object-fit: contain;
 }
 
 .page-loader i {
-  width: 108px;
+  width: 112px;
   height: 2px;
   overflow: hidden;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.16);
+  background: #1a1a1a;
 }
 
 .page-loader i::after {
@@ -164,18 +168,9 @@ button {
   animation: loader 1.2s var(--ease-editorial) infinite alternate;
 }
 
-.page-loader small {
-  color: rgba(255, 255, 255, 0.55);
-  font-family: var(--font-label);
-  font-size: 0.57rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 @keyframes loader {
   to {
-    transform: translateX(108px);
+    transform: translateX(112px);
   }
 }
 

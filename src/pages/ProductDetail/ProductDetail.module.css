@@ -48,8 +48,17 @@
   top: calc(var(--header-height) + 1.5rem);
   min-width: 0;
   padding: 0;
+  margin: 0;
   border: 0;
-  background: var(--color-charcoal);
+  background: #000;
+}
+
+.catalogArtwork {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center;
 }
 
 .visualCaption {
@@ -67,26 +76,8 @@
   padding-top: clamp(1rem, 5vw, 4rem);
 }
 
-.labels {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-
-.labels span {
-  padding: 0;
-  color: var(--color-gold-light);
-  border: 0;
-  font-family: var(--font-label);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
 .productInfo > small {
-  color: rgba(248, 246, 239, 0.5);
+  color: var(--color-gold-light);
   font-family: var(--font-label);
   font-size: 0.72rem;
   font-weight: 700;
@@ -95,13 +86,21 @@
 }
 
 .productInfo h1 {
-  margin: 0.75rem 0 1.2rem;
+  margin: 0.75rem 0 0.8rem;
   color: var(--color-white);
   font-family: var(--font-body);
   font-size: clamp(2.8rem, 5vw, 5.5rem);
   font-weight: 600;
   letter-spacing: -0.05em;
   line-height: 1.02;
+}
+
+.inspiration {
+  margin-bottom: 1.2rem;
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.55;
 }
 
 .description {
@@ -127,56 +126,25 @@
   text-transform: none;
 }
 
-.volumes > div {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+.volumes ul {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.volumes button {
-  display: grid;
-  gap: 0.25rem;
-  padding: 0.75rem;
-  color: rgba(248, 246, 239, 0.58);
+.volumes li {
+  min-width: 7.6rem;
+  padding: 0.8rem 0.95rem;
+  color: rgba(248, 246, 239, 0.78);
   border: 1px solid rgba(214, 189, 131, 0.22);
-  border-radius: 0;
   background: transparent;
-  text-align: left;
-  transition: color var(--duration-fast) var(--ease-soft), border-color var(--duration-fast) var(--ease-soft), background var(--duration-fast) var(--ease-soft);
-}
-
-.volumes button:hover,
-.volumes button.selected {
-  color: var(--color-black);
-  border-color: var(--color-gold);
-  background: var(--color-gold);
-}
-
-.volumes button > span {
   font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1;
-}
-
-.volumes button small {
-  color: currentColor;
-  font-family: var(--font-label);
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  opacity: 0.72;
-  text-transform: uppercase;
-}
-
-.notice {
-  margin: 1.15rem 0;
-  padding: 0.85rem 0.9rem;
-  color: var(--color-gold-light);
-  border-left: 2px solid var(--color-gold);
-  background: rgba(183, 154, 92, 0.1);
-  font-size: 0.78rem;
-  line-height: 1.6;
 }
 
 .actions {

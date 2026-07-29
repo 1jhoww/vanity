@@ -1,37 +1,45 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link, Navigate, useParams } from "react-router";
-import {
-  PrimaryButton,
-  TextLink
-} from "../../components/Button/Button";
+import { PrimaryButton, TextLink } from "../../components/Button/Button";
 import Container from "../../components/Container/Container";
 import FragranceShowcase from "../../components/FragranceShowcase/FragranceShowcase";
-import ProductVisual from "../../components/ProductVisual/ProductVisual";
 import Reveal from "../../components/Reveal/Reveal";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import SEO from "../../components/SEO/SEO";
-import { fragrances } from "../../data/products";
+import { fragrances, getInspirationText } from "../../data/products";
 import styles from "./ProductDetail.module.css";
 
 function ProductDetail() {
   const { slug } = useParams();
   const fragrance = fragrances.find(
-    (item) => item.slug === slug && item.available !== false
+    (item) =>
+      (item.slug === slug || item.aliases?.includes(slug)) &&
+      item.available !== false
   );
-  const [selection, setSelection] = useState({ slug: "", volume: "" });
 
   const related = useMemo(() => {
     if (!fragrance) return [];
+
     const available = fragrances.filter(
       (item) => item.available !== false && item.id !== fragrance.id
     );
-    const currentIndex = fragrances.findIndex((item) => item.id === fragrance.id);
+    const currentIndex = fragrances.findIndex(
+      (item) => item.id === fragrance.id
+    );
 
     return [...available]
       .sort((first, second) => {
-        const firstIndex = fragrances.findIndex((item) => item.id === first.id);
-        const secondIndex = fragrances.findIndex((item) => item.id === second.id);
-        return Math.abs(firstIndex - currentIndex) - Math.abs(secondIndex - currentIndex);
+        const firstIndex = fragrances.findIndex(
+          (item) => item.id === first.id
+        );
+        const secondIndex = fragrances.findIndex(
+          (item) => item.id === second.id
+        );
+
+        return (
+          Math.abs(firstIndex - currentIndex) -
+          Math.abs(secondIndex - currentIndex)
+        );
       })
       .slice(0, 3);
   }, [fragrance]);
@@ -40,13 +48,6 @@ function ProductDetail() {
     return <Navigate to="/404" replace />;
   }
 
-  const defaultPresentation =
-    fragrance.sizes.find((size) => size.image) ?? fragrance.sizes[0];
-  const selectedPresentation =
-    selection.slug === fragrance.slug
-      ? fragrance.sizes.find((size) => size.volume === selection.volume) ??
-        defaultPresentation
-      : defaultPresentation;
   const hasNotes = Object.values(fragrance.olfactoryNotes).some(
     (notes) => notes.length > 0
   );
@@ -62,17 +63,30 @@ function ProductDetail() {
   return (
     <>
       <SEO
-        title={fragrance.name}
-        description={`${fragrance.name}: perfume para cães e gatos. Conheça as apresentações disponíveis e saiba onde encontrar.`}
+        title={fragrance.seo.title}
+        description={fragrance.seo.description}
         path={`/produtos/${fragrance.slug}`}
         type="product"
         schema={{
           "@context": "https://schema.org",
           "@type": "Product",
           name: fragrance.name,
-          description: fragrance.description,
+          description: fragrance.seo.description,
+          image: `https://www.vanitypet.com.br${fragrance.catalogArtwork.src}`,
           brand: { "@type": "Brand", name: "Vanity Pet" },
-          category: "Perfume pet"
+          category: "Perfume pet",
+          additionalProperty: [
+            {
+              "@type": "PropertyValue",
+              name: "Referência olfativa",
+              value: getInspirationText(fragrance)
+            },
+            {
+              "@type": "PropertyValue",
+              name: "Apresentações",
+              value: "50 ml e 500 ml"
+            }
+          ]
         }}
       />
 
@@ -81,72 +95,47 @@ function ProductDetail() {
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <Link to="/">Home</Link>
             <span aria-hidden="true" />
-            <Link to="/produtos">Perfumes</Link>
+            <Link to="/fragrancias">Fragrâncias</Link>
             <span aria-hidden="true" />
             <strong aria-current="page">{fragrance.name}</strong>
           </nav>
 
           <div className={styles.productGrid}>
-            <div className={styles.visualColumn}>
-              <ProductVisual
-                product={fragrance}
-                presentation={selectedPresentation}
-                size="detail"
-                priority
+            <figure className={styles.visualColumn}>
+              <img
+                className={styles.catalogArtwork}
+                src={fragrance.catalogArtwork.src}
+                alt={`${fragrance.name}: frascos de 50 ml e 500 ml apresentados juntos`}
+                width={fragrance.catalogArtwork.width}
+                height={fragrance.catalogArtwork.height}
+                decoding="async"
+                fetchPriority="high"
               />
-              <p className={styles.visualCaption}>
-                {selectedPresentation.image
-                  ? `Fotografia oficial · ${selectedPresentation.volume}`
-                  : `Fotografia de ${selectedPresentation.volume} em atualização`}
-              </p>
-            </div>
+              <figcaption className={styles.visualCaption}>
+                Arte editorial · 50 ml e 500 ml
+              </figcaption>
+            </figure>
 
             <Reveal className={styles.productInfo}>
-              {(fragrance.isNew || fragrance.collection) && (
-                <div className={styles.labels}>
-                  {fragrance.isNew && <span>Lançamento</span>}
-                  {fragrance.collection && <span>{fragrance.collection}</span>}
-                </div>
-              )}
-              <small>Perfume para cães e gatos</small>
+              <small>{fragrance.family}</small>
               <h1>{fragrance.name}</h1>
+              <p className={styles.inspiration}>
+                {getInspirationText(fragrance)}
+              </p>
               <p className={styles.description}>{fragrance.description}</p>
 
               <div className={styles.volumes}>
-                <h2>Escolha a apresentação</h2>
-                <div role="group" aria-label="Apresentações disponíveis">
+                <h2>Apresentações disponíveis</h2>
+                <ul aria-label="Apresentações disponíveis">
                   {fragrance.sizes.map((presentation) => (
-                    <button
-                      key={presentation.volume}
-                      type="button"
-                      className={selectedPresentation.volume === presentation.volume ? styles.selected : ""}
-                      aria-pressed={selectedPresentation.volume === presentation.volume}
-                      onClick={() =>
-                        setSelection({
-                          slug: fragrance.slug,
-                          volume: presentation.volume
-                        })
-                      }
-                    >
-                      <span>{presentation.volume}</span>
-                      <small>{presentation.image ? "imagem disponível" : "imagem em atualização"}</small>
-                    </button>
+                    <li key={presentation.volume}>{presentation.volume}</li>
                   ))}
-                </div>
+                </ul>
               </div>
-
-              {!selectedPresentation.image && (
-                <p className={styles.notice} role="status">
-                  A imagem desta apresentação está em atualização. Escolha uma
-                  apresentação com fotografia oficial para voltar à imagem disponível.
-                </p>
-              )}
 
               <div className={styles.actions}>
                 <PrimaryButton to="/onde-comprar">Onde encontrar</PrimaryButton>
-                <TextLink to="/contato">
-                  Falar com a equipe
-                </TextLink>
+                <TextLink to="/contato">Falar com a equipe</TextLink>
               </div>
             </Reveal>
           </div>
@@ -192,7 +181,9 @@ function ProductDetail() {
                       <li>Saída: {fragrance.olfactoryNotes.top.join(", ")}</li>
                     )}
                     {fragrance.olfactoryNotes.heart.length > 0 && (
-                      <li>Corpo: {fragrance.olfactoryNotes.heart.join(", ")}</li>
+                      <li>
+                        Corpo: {fragrance.olfactoryNotes.heart.join(", ")}
+                      </li>
                     )}
                     {fragrance.olfactoryNotes.base.length > 0 && (
                       <li>Fundo: {fragrance.olfactoryNotes.base.join(", ")}</li>
@@ -243,7 +234,6 @@ function ProductDetail() {
               <FragranceShowcase
                 key={item.id}
                 product={item}
-                variant="compact"
                 headingLevel={3}
               />
             ))}

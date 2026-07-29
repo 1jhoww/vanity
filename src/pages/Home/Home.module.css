@@ -511,31 +511,70 @@
 
 @media (max-width: 680px) {
   .hero {
-    min-height: 960px;
+    min-height: max(780px, 100svh);
   }
 
   .heroInner {
-    min-height: 960px;
-    padding-top: calc(var(--header-height) + 2.8rem);
+    min-height: max(780px, 100svh);
+    align-items: flex-start;
+    padding-top: calc(var(--header-height) + 1.65rem);
+    padding-bottom: 46vh;
   }
 
-  .heroCopy h1 {
-    max-width: 8.5ch;
-    font-size: clamp(3.35rem, 15vw, 4.2rem);
-  }
-
-  .heroCopy p {
-    font-size: 1rem;
-    line-height: 1.68;
-  }
-
-  .heroActions > * {
+  .heroCopy {
     width: 100%;
   }
 
+  .heroKicker {
+    margin-bottom: 0.85rem;
+    font-size: 0.56rem;
+  }
+
+  .heroCopy h1 {
+    max-width: 9.5ch;
+    margin-bottom: 0.9rem;
+    font-size: clamp(2.75rem, 12.8vw, 3.25rem);
+    line-height: 0.98;
+  }
+
+  .heroCopy p {
+    max-width: 34ch;
+    margin-bottom: 1.15rem;
+    font-size: 0.9rem;
+    line-height: 1.52;
+  }
+
+  .heroActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .heroActions > * {
+    width: auto;
+    min-height: 52px;
+    padding-inline: 0.55rem;
+    font-size: 0.58rem;
+    line-height: 1.25;
+  }
+
+  .heroPicture {
+    inset: 50% 0 0;
+  }
+
+  .heroPicture::after {
+    background:
+      linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.76) 13%, transparent 42%),
+      linear-gradient(0deg, #080808 0%, transparent 20%);
+  }
+
   .heroPicture img {
-    width: 180vw;
-    margin-left: calc(100% - 180vw);
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin-left: 0;
+    object-fit: cover;
+    object-position: 70% center;
   }
 
   .finalLinks {
@@ -562,6 +601,40 @@
 
   .finalLink:last-child {
     border-left: 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .hero {
+    min-height: max(700px, 100svh);
+  }
+
+  .heroInner {
+    min-height: max(700px, 100svh);
+    padding-top: calc(var(--header-height) + 1.25rem);
+  }
+
+  .heroKicker {
+    margin-bottom: 0.7rem;
+  }
+
+  .heroCopy h1 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(2.45rem, 12.8vw, 2.75rem);
+  }
+
+  .heroCopy p {
+    margin-bottom: 0.9rem;
+    font-size: 0.86rem;
+  }
+
+  .heroActions {
+    gap: 0.45rem;
+  }
+
+  .heroActions > * {
+    padding-inline: 0.35rem;
+    font-size: 0.54rem;
   }
 }
 

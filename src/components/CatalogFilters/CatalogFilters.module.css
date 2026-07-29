@@ -1,0 +1,56 @@
+.scroller {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.filters {
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.filters button {
+  min-height: 44px;
+  flex: 0 0 auto;
+  padding: 0.65rem 1rem;
+  white-space: nowrap;
+  color: rgba(248, 246, 239, 0.58);
+  border: 1px solid rgba(214, 189, 131, 0.16);
+  border-radius: 4px;
+  background: transparent;
+  font-size: 0.76rem;
+  font-weight: 550;
+  transition:
+    color var(--duration-fast) var(--ease-soft),
+    border-color var(--duration-fast) var(--ease-soft),
+    background var(--duration-fast) var(--ease-soft);
+}
+
+.filters button:hover {
+  color: var(--color-white);
+  border-color: rgba(214, 189, 131, 0.42);
+}
+
+.filters .active {
+  color: var(--color-gold-light);
+  border-color: rgba(214, 189, 131, 0.68);
+  background: rgba(183, 154, 92, 0.1);
+}
+
+@media (max-width: 620px) {
+  .scroller {
+    width: calc(100% + 1rem);
+    padding-right: 1rem;
+  }
+
+  .filters {
+    min-width: max-content;
+  }
+}

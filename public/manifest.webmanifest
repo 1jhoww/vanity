@@ -1,7 +1,7 @@
 {
   "name": "Vanity Pet",
   "short_name": "Vanity Pet",
-  "description": "Coleção de perfumes Vanity Pet para cães e gatos.",
+  "description": "Catálogo de fragrâncias Vanity Pet para cães e gatos.",
   "lang": "pt-BR",
   "start_url": "/",
   "display": "standalone",

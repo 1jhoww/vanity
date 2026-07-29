@@ -87,7 +87,7 @@ function Home() {
               de personalidade, presença e sofisticação.
             </p>
             <div className={styles.heroActions}>
-              <Button to="/produtos">Conheça os perfumes</Button>
+              <Button to="/fragrancias">Conheça os perfumes</Button>
               <Button to="/contato" variant="outline">
                 Fale com nossa equipe
               </Button>
@@ -107,7 +107,7 @@ function Home() {
               Descubra fragrâncias criadas para diferentes estilos e momentos,
               disponíveis em formatos para uso pessoal e profissional.
             </p>
-            <TextLink to="/produtos">
+            <TextLink to="/fragrancias">
               Explorar perfumes
             </TextLink>
           </Reveal>
@@ -158,7 +158,7 @@ function Home() {
                   <small>{group.label}</small>
                   <h3>{group.title}</h3>
                   <p>{group.description}</p>
-                  <PrimaryButton to="/produtos">
+                  <PrimaryButton to="/fragrancias">
                     Explorar perfumes
                   </PrimaryButton>
                 </Reveal>

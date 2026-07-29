@@ -7,8 +7,7 @@ import styles from "./Header.module.css";
 const navigation = [
   { label: "Home", to: "/" },
   { label: "A Marca", to: "/a-marca" },
-  { label: "Fragrâncias", to: "/produtos" },
-  { label: "Coleção", to: "/linhas" },
+  { label: "Fragrâncias", to: "/fragrancias" },
   { label: "Onde Comprar", to: "/onde-comprar" },
   { label: "Contato", to: "/contato" }
 ];

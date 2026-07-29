@@ -1,12 +1,11 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import SiteLayout from "./layouts/SiteLayout/SiteLayout";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const About = lazy(() => import("./pages/About/About"));
 const Products = lazy(() => import("./pages/Products/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail/ProductDetail"));
-const Lines = lazy(() => import("./pages/Lines/Lines"));
 const WhereToBuy = lazy(() => import("./pages/WhereToBuy/WhereToBuy"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 const Privacy = lazy(() => import("./pages/Privacy/Privacy"));
@@ -15,9 +14,15 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 function PageLoader() {
   return (
     <div className="page-loader" role="status" aria-live="polite">
-      <span>Perfumaria pet</span>
+      <div className="page-loader__brand">
+        <img
+          src="/brand/vanity-pet-logo.png"
+          alt="Vanity Pet"
+          width="500"
+          height="300"
+        />
+      </div>
       <i aria-hidden="true" />
-      <small>Preparando a coleção</small>
     </div>
   );
 }
@@ -29,9 +34,20 @@ function App() {
         <Route element={<SiteLayout />}>
           <Route index element={<Home />} />
           <Route path="a-marca" element={<About />} />
-          <Route path="produtos" element={<Products />} />
+          <Route path="fragrancias" element={<Products />} />
+          <Route
+            path="produtos"
+            element={<Navigate to="/fragrancias" replace />}
+          />
           <Route path="produtos/:slug" element={<ProductDetail />} />
-          <Route path="linhas" element={<Lines />} />
+          <Route
+            path="colecao"
+            element={<Navigate to="/fragrancias" replace />}
+          />
+          <Route
+            path="linhas"
+            element={<Navigate to="/fragrancias" replace />}
+          />
           <Route path="onde-comprar" element={<WhereToBuy />} />
           <Route path="contato" element={<Contact />} />
           <Route path="politica-de-privacidade" element={<Privacy />} />

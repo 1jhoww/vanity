@@ -15,8 +15,7 @@ const linkGroups = [
   {
     title: "Produtos",
     links: [
-      { label: "Fragrâncias", to: "/produtos" },
-      { label: "Coleção", to: "/linhas" },
+      { label: "Fragrâncias", to: "/fragrancias" },
       { label: "Onde Comprar", to: "/onde-comprar" }
     ]
   }

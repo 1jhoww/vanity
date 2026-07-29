@@ -26,7 +26,7 @@ function NotFound() {
             </p>
             <div className={styles.actions}>
               <PrimaryButton to="/">Voltar ao início</PrimaryButton>
-              <SecondaryButton to="/produtos">
+              <SecondaryButton to="/fragrancias">
                 Ver fragrâncias
               </SecondaryButton>
             </div>

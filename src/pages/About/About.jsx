@@ -4,24 +4,6 @@ import Reveal from "../../components/Reveal/Reveal";
 import SEO from "../../components/SEO/SEO";
 import styles from "./About.module.css";
 
-const testimonials = [
-  {
-    context: "Profissionais",
-    statement:
-      "Uma fragrância marcante valoriza a finalização e ajuda a transformar o cuidado em uma experiência completa."
-  },
-  {
-    context: "Tutores",
-    statement:
-      "O aroma se torna parte da lembrança do banho, prolongando a sensação de cuidado também em casa."
-  },
-  {
-    context: "Identidade",
-    statement:
-      "Perfis olfativos distintos permitem que cada profissional encontre uma fragrância para diferentes estilos e ocasiões."
-  }
-];
-
 function About() {
   return (
     <>
@@ -44,12 +26,15 @@ function About() {
 
           <div className={styles.mastheadMedia}>
             <picture>
-              <source srcSet="/images/about/about-origin.webp" type="image/webp" />
+              <source
+                srcSet="/images/about/about-opening.webp"
+                type="image/webp"
+              />
               <img
-                src="/images/about/about-origin.jpg"
-                alt="Poodle preto finalizado em um ambiente profissional sofisticado"
-                width="1122"
-                height="1402"
+                src="/images/about/about-opening.jpg"
+                alt="Fragrâncias Vanity Pet em uma composição editorial sofisticada"
+                width="1821"
+                height="864"
                 fetchPriority="high"
                 decoding="async"
               />
@@ -60,65 +45,56 @@ function About() {
 
       <section className={styles.origin} aria-labelledby="origin-title">
         <Container className={styles.originGrid}>
-          <Reveal className={styles.originYear}>
-            <span>2016</span>
-          </Reveal>
-
-          <Reveal className={styles.originHeader}>
+          <Reveal className={styles.originCopy}>
+            <div className={styles.originStamp}>
+              <strong>2016</strong>
+              <span>O início da Vanity Pet</span>
+            </div>
             <span className={styles.chapterLabel}>Capítulo 01 · Origem</span>
             <h2 id="origin-title">O começo de uma nova ideia.</h2>
+            <p>
+              A Vanity Pet nasceu da experiência no universo pet e da vontade
+              de apresentar um novo conceito de perfumaria ao setor.
+            </p>
+            <blockquote>
+              Fragrâncias exclusivas para transformar a finalização em
+              presença.
+            </blockquote>
           </Reveal>
 
-          <Reveal className={styles.originNarrative} delay={80}>
-            <p>
-              A Vanity Pet nasceu em 2016 a partir de um conjunto de experiências
-              no universo pet e de um propósito muito claro: apresentar um novo
-              conceito de perfumaria para esse mercado.
-            </p>
-            <p>
-              Desde o início, buscamos levar aos produtos a nossa própria
-              identidade, desenvolvendo fragrâncias exclusivas, fascinantes e
-              capazes de despertar sentidos e sentimentos em pets e seus
-              tutores.
-            </p>
+          <Reveal as="figure" className={styles.originMedia} delay={90}>
+            <picture>
+              <source
+                srcSet="/images/about/about-origin.webp"
+                type="image/webp"
+              />
+              <img
+                src="/images/about/about-origin.jpg"
+                alt="Cão bem finalizado em uma fotografia editorial da Vanity Pet"
+                width="1122"
+                height="1402"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption>
+              Cuidado, acabamento e identidade desde o primeiro gesto.
+            </figcaption>
           </Reveal>
         </Container>
       </section>
 
-      <section className={styles.article} aria-labelledby="article-title">
+      <section className={styles.identity} aria-labelledby="identity-title">
         <Container>
-          <Reveal className={styles.articleHeader}>
-            <span className={styles.chapterLabel}>Capítulo 02 · Identidade</span>
-            <h2 id="article-title">Uma ideia que ganhou forma.</h2>
+          <Reveal className={styles.identityHeader}>
+            <span className={styles.chapterLabel}>
+              Capítulo 02 · Identidade
+            </span>
+            <h2 id="identity-title">Uma ideia que ganhou forma.</h2>
           </Reveal>
 
-          <div className={styles.articleLayout}>
-            <Reveal className={styles.articleBody}>
-              <p>
-                O conceito de qualidade, luxo e personalidade é levado a sério em
-                cada fragrância desenvolvida pela Vanity Pet.
-              </p>
-              <p>
-                Esse cuidado se estende por toda a experiência: desde o primeiro
-                contato com a marca até o momento em que a fragrância chega ao
-                pet.
-              </p>
-              <p>
-                Mais do que criar aromas, a Vanity Pet busca construir uma
-                identidade própria dentro do mercado e transformar a finalização
-                em uma experiência marcante.
-              </p>
-            </Reveal>
-
-            <Reveal
-              as="blockquote"
-              className={styles.articleQuote}
-              delay={80}
-            >
-              “Qualidade, luxo e personalidade em cada fragrância.”
-            </Reveal>
-
-            <Reveal className={styles.articleMedia} delay={100}>
+          <div className={styles.identityLayout}>
+            <Reveal as="figure" className={styles.identityMedia} delay={70}>
               <picture>
                 <source
                   srcSet="/images/about/about-craft.webp"
@@ -133,11 +109,16 @@ function About() {
                   decoding="async"
                 />
               </picture>
+              <figcaption>A fragrância como último gesto do cuidado.</figcaption>
             </Reveal>
 
-            <Reveal as="aside" className={styles.editorialNotes} delay={140}>
-              <span>Princípios</span>
-              <dl>
+            <Reveal className={styles.identityCopy} delay={120}>
+              <p>
+                Qualidade, luxo e personalidade orientam cada fragrância — do
+                desenvolvimento ao momento em que ela chega ao pet.
+              </p>
+              <blockquote>Mais que aromas, uma identidade própria.</blockquote>
+              <dl className={styles.principles}>
                 <div>
                   <dt>Qualidade</dt>
                   <dd>Em cada escolha.</dd>
@@ -157,58 +138,18 @@ function About() {
       </section>
 
       <section className={styles.manifesto} aria-labelledby="manifesto-title">
-        <div className={styles.manifestoArtwork} aria-hidden="true" />
         <Container className={styles.manifestoInner}>
-          <Reveal className={styles.manifestoCopy}>
+          <Reveal>
+            <span className={styles.chapterLabel}>Manifesto</span>
             <h2 id="manifesto-title">
               Cada detalhe constrói a experiência.
             </h2>
           </Reveal>
-
-          <Reveal className={styles.manifestoSeal} delay={90}>
-            <div className={styles.sealOrbit} aria-hidden="true" />
-            <img
-              src="/brand/vanity-pet-logo.png"
-              alt="Vanity Pet"
-              width="500"
-              height="300"
-              loading="lazy"
-              decoding="async"
-            />
+          <Reveal className={styles.manifestoLines} delay={90}>
+            <span>Cuidado que se percebe.</span>
+            <span>Personalidade que permanece.</span>
+            <span>Qualidade em cada escolha.</span>
           </Reveal>
-        </Container>
-      </section>
-
-      <section
-        className={styles.testimonials}
-        aria-labelledby="testimonials-title"
-      >
-        <Container>
-          <Reveal className={styles.testimonialsHeader}>
-            <span className={styles.chapterLabel}>Mensagens institucionais</span>
-            <h2 id="testimonials-title">Experiências que permanecem.</h2>
-            <p>
-              A fragrância acompanha o último gesto do cuidado e ajuda a construir
-              uma lembrança entre o profissional, o pet e seu tutor.
-            </p>
-          </Reveal>
-
-          <div className={styles.testimonialsList}>
-            {testimonials.map((testimonial, index) => (
-              <Reveal
-                as="article"
-                className={styles.testimonial}
-                delay={index * 70}
-                key={testimonial.context}
-              >
-                <small>{String(index + 1).padStart(2, "0")}</small>
-                <div>
-                  <span>{testimonial.context}</span>
-                  <p>{testimonial.statement}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </Container>
       </section>
 
@@ -217,24 +158,23 @@ function About() {
         aria-labelledby="recognition-title"
       >
         <Container className={styles.recognitionGrid}>
-          <Reveal className={styles.recognitionTitle}>
-            <span className={styles.chapterLabel}>
-              Capítulo 03 · Reconhecimento
-            </span>
-            <h2 id="recognition-title">
-              Reconhecimento construído no mercado.
-            </h2>
+          <Reveal className={styles.recognitionNumber}>
+            <strong>2</strong>
+            <span>anos consecutivos</span>
           </Reveal>
 
           <Reveal className={styles.recognitionStory} delay={90}>
+            <span className={styles.chapterLabel}>
+              Capítulo 03 · Reconhecimento
+            </span>
+            <h2 id="recognition-title">Uma trajetória reconhecida.</h2>
             <p>
-              O compromisso com qualidade, inovação e identidade própria levou a
-              Vanity Pet a conquistar destaque no setor, sendo sucesso de vendas
-              por dois anos consecutivos durante a Pet South America.
+              Na Pet South America, a Vanity Pet consolidou sua presença ao ser
+              sucesso de vendas por dois anos consecutivos.
             </p>
             <div className={styles.eventLine}>
               <strong>Pet South America</strong>
-              <span>Sucesso de vendas por dois anos consecutivos</span>
+              <span>Presença real no mercado pet</span>
             </div>
           </Reveal>
         </Container>
@@ -249,14 +189,11 @@ function About() {
           <Reveal className={styles.nextContent} delay={80}>
             <h2 id="next-title">Estamos apenas começando.</h2>
             <p>
-              Nossa linha exclusiva de fragrâncias foi apenas o primeiro passo.
+              Nossa linha exclusiva de fragrâncias foi o primeiro passo. A
+              Vanity Pet segue desenvolvendo novos produtos e possibilidades
+              para o universo pet.
             </p>
-            <p>
-              A Vanity Pet continua desenvolvendo novas possibilidades para
-              ampliar sua presença e levar ainda mais qualidade, identidade e
-              personalidade ao universo pet.
-            </p>
-            <TextLink to="/produtos">Conheça nossos perfumes</TextLink>
+            <TextLink to="/fragrancias">Conheça nossos perfumes</TextLink>
           </Reveal>
         </Container>
       </section>

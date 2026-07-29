@@ -1,251 +1,139 @@
-import { Search, X } from "lucide-react";
-import { useMemo, useState } from "react";
-import { SecondaryButton } from "../../components/Button/Button";
+import { useEffect, useMemo, useState } from "react";
+import CatalogEmptyState from "../../components/CatalogEmptyState/CatalogEmptyState";
+import CatalogFilters from "../../components/CatalogFilters/CatalogFilters";
+import CatalogSearch from "../../components/CatalogSearch/CatalogSearch";
 import Container from "../../components/Container/Container";
-import FragranceShowcase from "../../components/FragranceShowcase/FragranceShowcase";
-import PageHero from "../../components/PageHero/PageHero";
-import Reveal from "../../components/Reveal/Reveal";
+import FragranceCard from "../../components/FragranceCard/FragranceCard";
 import SEO from "../../components/SEO/SEO";
-import { fragrances } from "../../data/products";
+import {
+  fragranceFamilies,
+  fragrances,
+  getInspirationText,
+  normalizeCatalogSearch
+} from "../../data/products";
 import styles from "./Products.module.css";
 
-const PAGE_SIZE = 6;
+const SEARCH_DELAY = 180;
 
 function Products() {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
-  const [collection, setCollection] = useState("");
-  const [sort, setSort] = useState("catalog");
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [activeFamily, setActiveFamily] = useState("all");
 
-  const availableFragrances = useMemo(
+  const catalogFragrances = useMemo(
     () => fragrances.filter((fragrance) => fragrance.available !== false),
     []
   );
 
-  const collections = useMemo(
-    () =>
-      [...new Set(availableFragrances.map((item) => item.collection).filter(Boolean))].sort(),
-    [availableFragrances]
-  );
+  useEffect(() => {
+    const timeout = window.setTimeout(
+      () => setDebouncedSearch(search),
+      SEARCH_DELAY
+    );
 
-  const hasNewReleases = availableFragrances.some((item) => item.isNew);
+    return () => window.clearTimeout(timeout);
+  }, [search]);
 
   const filteredFragrances = useMemo(() => {
-    const term = search.trim().toLocaleLowerCase("pt-BR");
-    const matches = availableFragrances.filter((fragrance) => {
-      const searchable = [
-        fragrance.name,
-        fragrance.shortDescription,
-        fragrance.collection
-      ]
-        .join(" ")
-        .toLocaleLowerCase("pt-BR");
+    const term = normalizeCatalogSearch(debouncedSearch);
+
+    return catalogFragrances.filter((fragrance) => {
+      const searchable = normalizeCatalogSearch(
+        [
+          fragrance.name,
+          fragrance.family,
+          fragrance.shortDescription,
+          fragrance.inspiration,
+          getInspirationText(fragrance)
+        ].join(" ")
+      );
 
       return (
         (!term || searchable.includes(term)) &&
-        (filter === "all" ||
-          (filter === "featured" && fragrance.featured) ||
-          (filter === "new" && fragrance.isNew)) &&
-        (!collection || fragrance.collection === collection)
+        (activeFamily === "all" || fragrance.familyId === activeFamily)
       );
     });
+  }, [activeFamily, catalogFragrances, debouncedSearch]);
 
-    if (sort === "name") {
-      return [...matches].sort((a, b) =>
-        a.name.localeCompare(b.name, "pt-BR", { numeric: true })
-      );
-    }
+  const hasActiveSelection =
+    Boolean(debouncedSearch.trim()) || activeFamily !== "all";
+  const resultCount = filteredFragrances.length;
+  const resultLabel = hasActiveSelection
+    ? `${resultCount} ${
+        resultCount === 1 ? "resultado encontrado" : "resultados encontrados"
+      }`
+    : `${catalogFragrances.length} fragrâncias`;
 
-    if (sort === "recent") {
-      return [...matches].sort((a, b) =>
-        (b.launchDate || "").localeCompare(a.launchDate || "")
-      );
-    }
+  const clearSearch = () => {
+    setSearch("");
+    setDebouncedSearch("");
+  };
 
-    return matches;
-  }, [availableFragrances, collection, filter, search, sort]);
-
-  const visibleFragrances = filteredFragrances.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredFragrances.length;
-
-  const resetPage = () => setVisibleCount(PAGE_SIZE);
+  const resetCatalog = () => {
+    clearSearch();
+    setActiveFamily("all");
+  };
 
   return (
     <>
       <SEO
-        title="Perfumes"
-        description="Conheça o portfólio de perfumes para cães e gatos, veja as apresentações disponíveis e encontre sua fragrância."
-        path="/produtos"
-      />
-      <PageHero
-        eyebrow="Catálogo"
-        title="Perfumes Vanity Pet."
-        text="Busque por nome, filtre os destaques e consulte as apresentações de cada fragrância."
-        compact
+        title="Fragrâncias"
+        description="Explore as 19 fragrâncias Vanity Pet, suas referências olfativas e as apresentações de 50 ml e 500 ml."
+        path="/fragrancias"
       />
 
-      <section className={`section ${styles.catalog}`}>
+      <section className={styles.catalog} aria-labelledby="catalog-title">
         <Container>
-          <div className={styles.catalogIntro}>
-            <div>
-              <h2>Todos os perfumes.</h2>
-            </div>
+          <header className={styles.opening}>
+            <span className={styles.eyebrow}>Fragrâncias</span>
+            <h1 id="catalog-title">Encontre sua assinatura.</h1>
             <p>
-              Use a busca e os filtros para encontrar uma fragrância e ver os
-              volumes disponíveis.
+              Dezenove fragrâncias criadas para transformar o último gesto do
+              cuidado em uma experiência de personalidade e sofisticação.
             </p>
-          </div>
+          </header>
 
-          <div className={styles.toolbar}>
-            <div className={styles.search}>
-              <label className="sr-only" htmlFor="catalog-search">
-                Buscar perfumes
-              </label>
-              <Search aria-hidden="true" size={18} strokeWidth={1.5} />
-              <input
-                id="catalog-search"
-                type="search"
+          <div className={styles.discovery}>
+            <div className={styles.searchRow}>
+              <CatalogSearch
                 value={search}
-                onChange={(event) => {
-                  setSearch(event.target.value);
-                  resetPage();
-                }}
-                placeholder="Buscar por nome"
+                onChange={setSearch}
+                onClear={clearSearch}
+                resultDescriptionId="catalog-result-count"
               />
-              {search && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearch("");
-                    resetPage();
-                  }}
-                  aria-label="Limpar busca"
-                >
-                  <X aria-hidden="true" size={16} />
-                </button>
-              )}
+              <p
+                id="catalog-result-count"
+                className={styles.resultCount}
+                aria-live="polite"
+              >
+                {resultLabel}
+              </p>
             </div>
 
-            <div className={styles.filterGroup} role="group" aria-label="Filtrar catálogo">
-              <button
-                type="button"
-                className={filter === "all" ? styles.active : ""}
-                onClick={() => {
-                  setFilter("all");
-                  resetPage();
-                }}
-                aria-pressed={filter === "all"}
-              >
-                Todos
-              </button>
-              <button
-                type="button"
-                className={filter === "featured" ? styles.active : ""}
-                onClick={() => {
-                  setFilter("featured");
-                  resetPage();
-                }}
-                aria-pressed={filter === "featured"}
-              >
-                Destaques
-              </button>
-              {hasNewReleases && (
-                <button
-                  type="button"
-                  className={filter === "new" ? styles.active : ""}
-                  onClick={() => {
-                    setFilter("new");
-                    resetPage();
-                  }}
-                  aria-pressed={filter === "new"}
-                >
-                  Lançamentos
-                </button>
-              )}
+            <CatalogFilters
+              filters={fragranceFamilies}
+              activeFilter={activeFamily}
+              onChange={setActiveFamily}
+            />
+          </div>
+
+          {filteredFragrances.length > 0 ? (
+            <div
+              id="catalog-results"
+              className={styles.list}
+              aria-label="Fragrâncias encontradas"
+            >
+              {filteredFragrances.map((fragrance, index) => (
+                <FragranceCard
+                  key={fragrance.id}
+                  product={fragrance}
+                  index={index}
+                />
+              ))}
             </div>
-
-            {collections.length > 0 && (
-              <label className={styles.selectField}>
-                <span>Coleção</span>
-                <select
-                  value={collection}
-                  onChange={(event) => {
-                    setCollection(event.target.value);
-                    resetPage();
-                  }}
-                >
-                  <option value="">Todas</option>
-                  {collections.map((name) => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
-
-            <label className={styles.selectField}>
-              <span>Ordenar</span>
-              <select
-                value={sort}
-                onChange={(event) => {
-                  setSort(event.target.value);
-                  resetPage();
-                }}
-              >
-                <option value="catalog">Ordem do catálogo</option>
-                <option value="name">Nome</option>
-                {hasNewReleases && <option value="recent">Mais recentes</option>}
-              </select>
-            </label>
-          </div>
-
-          <div className={styles.resultHeader}>
-            <p aria-live="polite">
-              Exibindo <strong>{visibleFragrances.length}</strong> de{" "}
-              <strong>{filteredFragrances.length}</strong> perfumes
-            </p>
-            <span>Catálogo institucional — consulte onde comprar</span>
-          </div>
-
-          <div className={styles.list}>
-            {visibleFragrances.length > 0 ? (
-              visibleFragrances.map((fragrance) => (
-                <Reveal key={fragrance.id}>
-                  <FragranceShowcase product={fragrance} />
-                </Reveal>
-              ))
-            ) : (
-              <div className="no-results">
-                <h2>Nenhum perfume encontrado.</h2>
-                <p>Ajuste a busca ou retorne ao catálogo completo.</p>
-                <SecondaryButton
-                  type="button"
-                  onClick={() => {
-                    setSearch("");
-                    setFilter("all");
-                    setCollection("");
-                    resetPage();
-                  }}
-                >
-                  Mostrar todos
-                </SecondaryButton>
-              </div>
-            )}
-          </div>
-
-          {hasMore && (
-            <div className={styles.loadMore}>
-              <SecondaryButton
-                type="button"
-                onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}
-              >
-                Carregar mais
-              </SecondaryButton>
-              <span>
-                {filteredFragrances.length - visibleCount} perfumes restantes
-              </span>
+          ) : (
+            <div id="catalog-results">
+              <CatalogEmptyState onReset={resetCatalog} />
             </div>
           )}
         </Container>
