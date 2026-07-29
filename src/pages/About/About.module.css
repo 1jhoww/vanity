@@ -95,11 +95,11 @@
 }
 
 .originGrid {
-  width: min(calc(100% - 3rem), 68rem);
+  width: min(calc(100% - 3rem), 76rem);
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(340px, 1.12fr);
+  grid-template-columns: minmax(0, 0.78fr) minmax(460px, 1.22fr);
   align-items: center;
-  gap: clamp(4rem, 9vw, 9rem);
+  gap: clamp(3.5rem, 6vw, 6rem);
 }
 
 .originCopy {
@@ -162,12 +162,12 @@
 }
 
 .originMedia {
-  width: min(100%, 31rem);
+  width: min(100%, 46rem);
   justify-self: end;
 }
 
 .originMedia picture {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 43 / 24;
   display: block;
   overflow: hidden;
   background: #050505;
@@ -182,6 +182,7 @@
 }
 
 .originMedia img {
+  object-fit: contain;
   object-position: center;
 }
 
@@ -433,9 +434,22 @@
 }
 
 @media (max-width: 900px) {
-  .originGrid,
   .recognitionGrid {
     gap: 3.5rem;
+  }
+
+  .originGrid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .originCopy {
+    max-width: 42rem;
+  }
+
+  .originMedia {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .identityLayout {
@@ -459,10 +473,6 @@
 
   .mastheadMedia {
     width: 85%;
-  }
-
-  .originGrid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
   }
 
   .identityHeader {
@@ -572,6 +582,15 @@
 
   .originMedia {
     width: 100%;
+  }
+
+  .originMedia picture {
+    aspect-ratio: 4 / 3;
+  }
+
+  .originMedia img {
+    object-fit: cover;
+    object-position: center;
   }
 
   .originMedia figcaption,

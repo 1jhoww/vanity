@@ -64,15 +64,11 @@ function About() {
 
           <Reveal as="figure" className={styles.originMedia} delay={90}>
             <picture>
-              <source
-                srcSet="/images/about/about-origin.webp"
-                type="image/webp"
-              />
               <img
-                src="/images/about/about-origin.jpg"
+                src="/images/about/about-origin-poodle.jpg"
                 alt="Cão bem finalizado em uma fotografia editorial da Vanity Pet"
-                width="1122"
-                height="1402"
+                width="2752"
+                height="1536"
                 loading="lazy"
                 decoding="async"
               />
