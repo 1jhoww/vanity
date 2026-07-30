@@ -13,6 +13,12 @@ const artworkDimensions = {
   "black-vanity": { width: 1536, height: 1024 }
 };
 
+const catalogArtworkFraming = {
+  baby: { scale: 1.14, position: "center 49%" },
+  "black-cherry": { scale: 1.12, position: "center 49%" },
+  "black-vanity": { scale: 1.12, position: "center 49%" }
+};
+
 const presentations = [{ volume: "50 ml" }, { volume: "500 ml" }];
 
 export function getInspirationText(fragrance) {
@@ -43,6 +49,10 @@ function fragrance({
   const family =
     fragranceFamilies.find((item) => item.id === familyId)?.label ?? "";
   const dimensions = artworkDimensions[id] ?? { width: 1254, height: 1254 };
+  const framing = catalogArtworkFraming[id] ?? {
+    scale: 1,
+    position: "center"
+  };
   const reference =
     inspirationType === "exclusive"
       ? `criação exclusiva Vanity Pet com referência em ${inspiration}`
@@ -60,7 +70,8 @@ function fragrance({
     inspiration,
     catalogArtwork: {
       src: `/images/catalogo/${id}.png`,
-      ...dimensions
+      ...dimensions,
+      ...framing
     },
     images: {
       primary: `/images/catalogo/${id}.png`,

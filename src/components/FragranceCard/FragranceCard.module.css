@@ -14,6 +14,7 @@
   display: grid;
   place-items: center;
   aspect-ratio: 1;
+  overflow: hidden;
   background: #030403;
 }
 
@@ -22,7 +23,9 @@
   height: 100%;
   display: block;
   object-fit: contain;
-  object-position: center;
+  object-position: var(--artwork-position, center);
+  transform: scale(var(--artwork-scale, 1));
+  transform-origin: center;
 }
 
 .content {
@@ -115,6 +118,24 @@
 
   .content {
     padding: clamp(1.75rem, 6vw, 3rem);
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1536px) {
+  .content {
+    padding: clamp(2rem, 3.5vw, 3.4rem);
+  }
+
+  .content h2 {
+    font-size: clamp(2.35rem, 3.7vw, 3.5rem);
+  }
+
+  .content p {
+    margin-bottom: 1.2rem;
+  }
+
+  .volumes {
+    margin-bottom: 1.35rem;
   }
 }
 

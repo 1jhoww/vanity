@@ -6,34 +6,60 @@
   color: var(--color-white);
 }
 
-.masthead {
+.opening {
   padding-top: var(--header-height);
+  overflow: hidden;
   color: #fff;
   background: #000;
 }
 
-.mastheadInner {
-  padding-block: clamp(2.5rem, 3.5vw, 3.75rem) 0;
+.openingInner {
+  width: min(calc(100% - 3rem), 88rem);
+  min-height: calc(100svh - var(--header-height));
+  display: grid;
+  grid-template-columns: minmax(20rem, 38fr) minmax(0, 62fr);
+  align-items: center;
+  gap: clamp(0.25rem, 1.5vw, 1.5rem);
+  padding-block: clamp(2.5rem, 4vw, 4.5rem);
 }
 
-.mastheadHeader {
-  width: min(100%, 58rem);
-  margin: 0 auto clamp(2.25rem, 3vw, 3rem);
-  text-align: center;
+.openingCopy {
+  position: relative;
+  z-index: 2;
+  width: calc(100% + clamp(0rem, 1.5vw, 1.5rem));
+  transform: translateY(clamp(-2.5rem, -3vh, -1rem));
 }
 
-.mastheadLabel {
+.openingEyebrow {
   display: block;
-  margin-bottom: 1.35rem;
-  color: #8d7542;
-  font-family: var(--font-body);
-  font-size: 0.66rem;
+  margin-bottom: 1rem;
+  color: var(--color-gold-light);
+  font-family: var(--font-site);
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.masthead h1,
+.opening h1 {
+  max-width: 9.5ch;
+  margin-bottom: 1rem;
+  color: var(--color-white);
+  font-family: var(--font-site);
+  font-size: clamp(3.15rem, 4.5vw, 4.75rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.openingCopy p {
+  max-width: 31rem;
+  margin-bottom: 0;
+  color: rgba(248, 246, 239, 0.7);
+  font-size: clamp(0.96rem, 1vw, 1.08rem);
+  line-height: 1.65;
+}
+
 .origin h2,
 .identity h2,
 .recognition h2,
@@ -44,38 +70,44 @@
   line-height: 1.04;
 }
 
-.masthead h1 {
-  margin: 0 auto;
-  font-size: clamp(2.25rem, 3.6vw, 3.8rem);
-  letter-spacing: -0.045em;
-  line-height: 1.1;
+.openingVisual {
+  position: relative;
+  width: calc(100% + clamp(3rem, 6vw, 7rem));
+  height: clamp(32rem, 72svh, 46rem);
+  margin: 0 0 0 clamp(-2rem, -1.6vw, -0.75rem);
+  overflow: hidden;
+  background: #050505;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 88%,
+    transparent 100%
+  );
 }
 
-.mastheadIntro {
-  max-width: 46rem;
-  margin: 1.35rem auto 0;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
-  line-height: 1.7;
-  text-wrap: balance;
+.openingVisual::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.5) 5%, transparent 18%);
 }
 
-.mastheadMedia {
-  width: 82%;
-  margin-inline: auto;
-  background: #000;
-}
-
-.mastheadMedia picture {
+.openingVisual picture,
+.openingVisual img {
   width: 100%;
+  height: 100%;
   display: block;
 }
 
-.mastheadMedia img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+.openingVisual img {
+  object-fit: cover;
   object-position: center;
 }
 
@@ -91,7 +123,7 @@
 
 .origin {
   padding-block: clamp(6.5rem, 10vw, 10rem);
-  background: #0d0d0d;
+  background: #000;
 }
 
 .originGrid {
@@ -434,6 +466,29 @@
 }
 
 @media (max-width: 900px) {
+  .openingInner {
+    width: min(calc(100% - 3rem), 46rem);
+    min-height: auto;
+    display: block;
+    padding-block: clamp(3rem, 7vw, 4.5rem) 0;
+  }
+
+  .openingCopy {
+    width: min(86%, 40rem);
+    transform: none;
+  }
+
+  .opening h1 {
+    font-size: clamp(3rem, 7vw, 4rem);
+  }
+
+  .openingVisual {
+    width: calc(100% + 1.5rem);
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin: 2rem -0.75rem 0;
+  }
+
   .recognitionGrid {
     gap: 3.5rem;
   }
@@ -463,18 +518,6 @@
 }
 
 @media (max-width: 820px) {
-  .mastheadInner {
-    padding-top: 3.25rem;
-  }
-
-  .masthead h1 {
-    font-size: clamp(2.2rem, 5.8vw, 3.25rem);
-  }
-
-  .mastheadMedia {
-    width: 85%;
-  }
-
   .identityHeader {
     grid-template-columns: minmax(130px, 0.38fr) 1fr;
   }
@@ -490,44 +533,41 @@
 }
 
 @media (max-width: 620px) {
-  .mastheadInner {
-    padding-top: 2.75rem;
+  .openingInner {
+    width: min(calc(100% - 2rem), var(--container));
+    padding-top: 2rem;
   }
 
-  .masthead h1 {
-    font-size: clamp(2rem, 9.4vw, 2.75rem);
-    line-height: 1.08;
+  .openingCopy {
+    width: 100%;
   }
 
-  .mastheadIntro {
-    margin-top: 1.1rem;
+  .openingEyebrow {
+    margin-bottom: 0.75rem;
+    font-size: 0.62rem;
+  }
+
+  .opening h1 {
+    max-width: 10ch;
+    margin-bottom: 0.8rem;
+    font-size: clamp(2.35rem, 10.5vw, 3rem);
+    line-height: 1;
+  }
+
+  .openingCopy p {
+    max-width: 34rem;
     font-size: 0.92rem;
-    line-height: 1.62;
+    line-height: 1.55;
   }
 
-  .mastheadLabel {
-    margin-bottom: 1rem;
-  }
-
-  .mastheadHeader {
-    margin-bottom: 2rem;
-  }
-
-  .mastheadMedia {
+  .openingVisual {
     width: calc(100% + 2rem);
-    height: clamp(17.5rem, 82vw, 20rem);
-    margin-inline: -1rem;
-    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    margin: 1.5rem -1rem 0;
   }
 
-  .mastheadMedia picture {
-    height: 100%;
-  }
-
-  .mastheadMedia img {
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 54%;
+  .openingVisual::after {
+    background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.32) 5%, transparent 18%);
   }
 
   .origin,
@@ -682,5 +722,66 @@
 
   .nextChapter h2 {
     margin-bottom: 1.2rem;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1536px) {
+  .openingInner {
+    width: min(calc(100% - 4rem), 74rem);
+    gap: clamp(0.25rem, 1vw, 1rem);
+    padding-block: clamp(2.25rem, 3.25vw, 3.5rem);
+  }
+
+  .opening h1 {
+    font-size: clamp(3rem, 4vw, 4rem);
+  }
+
+  .openingVisual {
+    width: calc(100% + clamp(2.5rem, 4vw, 4rem));
+    height: clamp(28rem, 62svh, 35rem);
+  }
+
+  .origin,
+  .identity,
+  .recognition,
+  .nextChapter {
+    padding-block: clamp(5rem, 7vw, 6.75rem);
+  }
+
+  .manifesto {
+    padding-block: clamp(5.5rem, 7.5vw, 7.25rem);
+  }
+
+  .originGrid,
+  .recognitionGrid,
+  .nextGrid {
+    width: min(calc(100% - 4rem), 68rem);
+  }
+
+  .identity > div,
+  .manifestoInner {
+    width: min(calc(100% - 4rem), 68rem);
+  }
+
+  .originGrid,
+  .identityLayout,
+  .recognitionGrid,
+  .nextGrid {
+    gap: clamp(2.75rem, 5vw, 5rem);
+  }
+
+  .origin h2,
+  .identity h2,
+  .recognition h2,
+  .nextChapter h2 {
+    font-size: clamp(2.5rem, 3.7vw, 3.75rem);
+  }
+
+  .manifesto h2 {
+    font-size: clamp(3rem, 4.8vw, 4.75rem);
+  }
+
+  .recognitionNumber strong {
+    font-size: clamp(7rem, 11vw, 9rem);
   }
 }

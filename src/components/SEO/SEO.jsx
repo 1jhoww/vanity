@@ -28,7 +28,7 @@ function SEO({
   useEffect(() => {
     const fullTitle = title
       ? `${title} | ${SITE_NAME}`
-      : `${SITE_NAME} | Perfumes para cães e gatos`;
+      : `${SITE_NAME} | Perfumaria pet premium`;
     const canonicalUrl = `${BASE_URL}${path}`;
     const imageUrl = image
       ? image.startsWith("http")

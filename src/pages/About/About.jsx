@@ -9,37 +9,33 @@ function About() {
     <>
       <SEO
         title="A Marca"
-        description="Conheça a proposta da Vanity Pet e seu portfólio de perfumes para cães e gatos."
+        description="Conheça a Vanity Pet, perfumaria pet premium com fragrâncias importadas e fórmulas hipoalergênicas para cães e gatos."
         path="/a-marca"
       />
 
-      <section className={styles.masthead} aria-labelledby="about-title">
-        <Container className={styles.mastheadInner}>
-          <div className={styles.mastheadHeader}>
-            <span className={styles.mastheadLabel}>A marca</span>
+      <section className={styles.opening} aria-labelledby="about-title">
+        <Container className={styles.openingInner}>
+          <div className={styles.openingCopy}>
+            <span className={styles.openingEyebrow}>A marca</span>
             <h1 id="about-title">Elegância que permanece.</h1>
-            <p className={styles.mastheadIntro}>
-              Desde 2016 desenvolvendo fragrâncias que unem cuidado,
-              personalidade e sofisticação para cães e gatos.
+            <p>
+              Fragrâncias importadas e fórmulas hipoalergênicas que transformam
+              o cuidado pet em uma experiência de perfumaria sofisticada.
             </p>
           </div>
 
-          <div className={styles.mastheadMedia}>
+          <figure className={styles.openingVisual}>
             <picture>
-              <source
-                srcSet="/images/about/about-opening.webp"
-                type="image/webp"
-              />
               <img
-                src="/images/about/about-opening.jpg"
-                alt="Fragrâncias Vanity Pet em uma composição editorial sofisticada"
-                width="1821"
-                height="864"
+                src="/images/about/about-opening-products.png"
+                alt="Frascos de perfumes Vanity Pet em composição editorial sobre fundo preto"
+                width="1536"
+                height="1024"
                 fetchPriority="high"
                 decoding="async"
               />
             </picture>
-          </div>
+          </figure>
         </Container>
       </section>
 
@@ -54,7 +50,8 @@ function About() {
             <h2 id="origin-title">O começo de uma nova ideia.</h2>
             <p>
               A Vanity Pet nasceu da experiência no universo pet e da vontade
-              de apresentar um novo conceito de perfumaria ao setor.
+              de unir fragrâncias importadas de alta qualidade a fórmulas
+              hipoalergênicas em um novo conceito de perfumaria para o setor.
             </p>
             <blockquote>
               Fragrâncias exclusivas para transformar a finalização em
@@ -110,8 +107,8 @@ function About() {
 
             <Reveal className={styles.identityCopy} delay={120}>
               <p>
-                Qualidade, luxo e personalidade orientam cada fragrância — do
-                desenvolvimento ao momento em que ela chega ao pet.
+                Qualidade, luxo e personalidade orientam cada criação — da
+                seleção das fragrâncias à formulação delicada que chega ao pet.
               </p>
               <blockquote>Mais que aromas, uma identidade própria.</blockquote>
               <dl className={styles.principles}>
@@ -185,9 +182,9 @@ function About() {
           <Reveal className={styles.nextContent} delay={80}>
             <h2 id="next-title">Estamos apenas começando.</h2>
             <p>
-              Nossa linha exclusiva de fragrâncias foi o primeiro passo. A
-              Vanity Pet segue desenvolvendo novos produtos e possibilidades
-              para o universo pet.
+              Nossa linha de alta perfumaria foi o primeiro passo. A Vanity Pet
+              segue desenvolvendo produtos que unem sofisticação olfativa,
+              cuidado e novas possibilidades para o universo pet.
             </p>
             <TextLink to="/fragrancias">Conheça nossos perfumes</TextLink>
           </Reveal>

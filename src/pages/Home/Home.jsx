@@ -12,7 +12,7 @@ const fragranceGroups = [
     label: "Florais",
     title: "Fragrâncias florais",
     description:
-      "Perfis delicados e elegantes desenvolvidos para quem procura fragrâncias marcantes e sofisticadas.",
+      "Composições importadas de alta qualidade, delicadas e elegantes, para uma assinatura marcante com acabamento sofisticado.",
     file: "florais",
     alt: "Perfumes Flowers de 500 ml e 50 ml entre flores roxas"
   },
@@ -20,15 +20,16 @@ const fragranceGroups = [
     label: "Frutadas",
     title: "Fragrâncias frutadas",
     description:
-      "Perfis vibrantes e expressivos, com combinações que trazem leveza, energia e personalidade ao cuidado diário.",
-    file: "frutadas",
+      "Perfis vibrantes que unem matérias-primas selecionadas, personalidade e uma formulação delicada para o cuidado diário.",
+    file: "frutadas-novo",
+    hasWebp: false,
     alt: "Perfumes Mango de 500 ml e Strawberry de 50 ml entre frutas"
   },
   {
     label: "Doces / Gourmand",
     title: "Fragrâncias doces e gourmand",
     description:
-      "Composições envolventes e acolhedoras, com presença adocicada para momentos de cuidado memoráveis.",
+      "Acordes envolventes e acolhedores para uma experiência de perfumaria pet premium, marcante e memorável.",
     file: "doces",
     alt: "Perfumes Sweet de 500 ml e Illusion de 50 ml com chocolate, baunilha e caramelo"
   },
@@ -36,15 +37,16 @@ const fragranceGroups = [
     label: "Frescas / Cítricas",
     title: "Fragrâncias frescas e cítricas",
     description:
-      "Perfis leves e luminosos, pensados para transmitir frescor e uma sensação limpa e revigorante.",
-    file: "citricas",
+      "Fragrâncias importadas de perfil leve e luminoso, com frescor limpo e acabamento contemporâneo.",
+    file: "citricas-novo",
+    hasWebp: false,
     alt: "Perfumes Explosion de 500 ml e Citric de 50 ml com frutas cítricas"
   },
   {
     label: "Intensas / Elegantes",
     title: "Fragrâncias intensas e elegantes",
     description:
-      "Fragrâncias de presença marcante e acabamento sofisticado, criadas para quem prefere uma assinatura mais intensa.",
+      "Assinaturas de alta perfumaria, com presença marcante e sofisticação para uma finalização inesquecível.",
     file: "intensas",
     alt: "Perfumes Gold de 500 ml e Black Vanity de 50 ml em composição preta e dourada"
   }
@@ -54,7 +56,7 @@ function Home() {
   return (
     <>
       <SEO
-        description="Perfumes para cães e gatos com personalidade, sofisticação e identidade."
+        description="Vanity Pet: perfumaria pet premium com fragrâncias importadas e fórmulas hipoalergênicas para cães e gatos."
         path="/"
         schema={{
           "@context": "https://schema.org",
@@ -78,13 +80,13 @@ function Home() {
         </picture>
         <Container className={styles.heroInner}>
           <div className={styles.heroCopy}>
-            <span className={styles.heroKicker}>Perfumes para cães e gatos</span>
+            <span className={styles.heroKicker}>Perfumaria pet premium</span>
             <h1>
               Presença que <span>deixa marca.</span>
             </h1>
             <p>
-              Fragrâncias criadas para transformar o cuidado em uma experiência
-              de personalidade, presença e sofisticação.
+              Fragrâncias importadas e fórmulas hipoalergênicas para uma
+              experiência de perfumaria pet sofisticada.
             </p>
             <div className={styles.heroActions}>
               <Button to="/fragrancias">Conheça os perfumes</Button>
@@ -104,8 +106,9 @@ function Home() {
           </Reveal>
           <Reveal className={styles.introCopy} delay={80}>
             <p>
-              Descubra fragrâncias criadas para diferentes estilos e momentos,
-              disponíveis em formatos para uso pessoal e profissional.
+              Descubra fragrâncias importadas de alta qualidade, com fórmulas
+              hipoalergênicas e apresentações para o cuidado pessoal e
+              profissional.
             </p>
             <TextLink to="/fragrancias">
               Explorar perfumes
@@ -120,8 +123,8 @@ function Home() {
             <span className="eyebrow dark-eyebrow">Perfis de fragrância</span>
             <h2>Descubra diferentes perfis.</h2>
             <p>
-              Um universo de fragrâncias para diferentes estilos, momentos e
-              formas de presença.
+              Uma curadoria de perfis olfativos marcantes, criada para unir alta
+              perfumaria, cuidado e personalidade.
             </p>
           </Reveal>
         </Container>
@@ -140,10 +143,12 @@ function Home() {
               <Container className={styles.groupInner}>
                 <Reveal className={styles.groupMedia} delay={80}>
                   <picture>
-                    <source
-                      srcSet={`/images/home/fragrance-groups/${group.file}.webp`}
-                      type="image/webp"
-                    />
+                    {group.hasWebp !== false && (
+                      <source
+                        srcSet={`/images/home/fragrance-groups/${group.file}.webp`}
+                        type="image/webp"
+                      />
+                    )}
                     <img
                       src={`/images/home/fragrance-groups/${group.file}.png`}
                       alt={group.alt}

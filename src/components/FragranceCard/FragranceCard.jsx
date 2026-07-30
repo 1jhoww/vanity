@@ -18,6 +18,10 @@ function FragranceCard({ product, index }) {
           alt={`${product.name}: frascos de 50 ml e 500 ml apresentados juntos`}
           width={artwork.width}
           height={artwork.height}
+          style={{
+            "--artwork-scale": artwork.scale,
+            "--artwork-position": artwork.position
+          }}
           loading="lazy"
           decoding="async"
         />

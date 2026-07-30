@@ -78,18 +78,19 @@ function Products() {
     <>
       <SEO
         title="Fragrâncias"
-        description="Explore as 19 fragrâncias Vanity Pet, suas referências olfativas e as apresentações de 50 ml e 500 ml."
+        description="Explore 19 fragrâncias importadas Vanity Pet: perfumaria pet premium com fórmulas hipoalergênicas para cães e gatos."
         path="/fragrancias"
       />
 
       <section className={styles.catalog} aria-labelledby="catalog-title">
-        <Container>
+        <Container className={styles.catalogInner}>
           <header className={styles.opening}>
             <span className={styles.eyebrow}>Fragrâncias</span>
             <h1 id="catalog-title">Encontre sua assinatura.</h1>
             <p>
-              Dezenove fragrâncias criadas para transformar o último gesto do
-              cuidado em uma experiência de personalidade e sofisticação.
+              Dezenove fragrâncias importadas, com fórmulas hipoalergênicas e
+              perfis marcantes para transformar o último gesto do cuidado em
+              alta perfumaria pet.
             </p>
           </header>
 
