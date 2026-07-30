@@ -62,10 +62,10 @@ function About() {
           <Reveal as="figure" className={styles.originMedia} delay={90}>
             <picture>
               <img
-                src="/images/about/about-origin-poodle.jpg"
-                alt="Cão bem finalizado em uma fotografia editorial da Vanity Pet"
-                width="2752"
-                height="1536"
+                src="/images/about/about-origin-border-collie-night.png"
+                alt="Perfumes Vanity Pet ao lado de um Border Collie e um Pastor de Shetland"
+                width="1536"
+                height="1024"
                 loading="lazy"
                 decoding="async"
               />
@@ -89,15 +89,11 @@ function About() {
           <div className={styles.identityLayout}>
             <Reveal as="figure" className={styles.identityMedia} delay={70}>
               <picture>
-                <source
-                  srcSet="/images/about/about-craft.webp"
-                  type="image/webp"
-                />
                 <img
-                  src="/images/about/about-craft.jpg"
-                  alt="Profissional aplicando perfume como etapa final do cuidado de um cão"
-                  width="1672"
-                  height="941"
+                  src="/images/about/poodle-with-perfume-bottle.jpeg"
+                  alt="Poodle ao lado de um perfume Vanity Pet em uma composição editorial"
+                  width="2752"
+                  height="1536"
                   loading="lazy"
                   decoding="async"
                 />

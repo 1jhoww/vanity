@@ -1,6 +1,7 @@
 import Container from "../../components/Container/Container";
 import PageHero from "../../components/PageHero/PageHero";
 import SEO from "../../components/SEO/SEO";
+import { contactInfo } from "../../config/site";
 import styles from "./Privacy.module.css";
 
 const sections = [
@@ -30,7 +31,7 @@ const sections = [
   },
   {
     title: "7. Contato e atualizações",
-    text: "Dúvidas sobre privacidade poderão ser encaminhadas ao canal oficial que será definido pela Vanity Pet. Esta política deve ser revisada por assessoria jurídica antes da publicação definitiva."
+    text: `Dúvidas sobre privacidade podem ser encaminhadas para ${contactInfo.email}. Esta política deve ser revisada por assessoria jurídica antes da publicação definitiva.`
   }
 ];
 

@@ -257,14 +257,15 @@
 }
 
 .identityMedia picture {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 43 / 24;
   display: block;
   overflow: hidden;
   background: #0d0d0d;
 }
 
 .identityMedia img {
-  object-position: 58% center;
+  object-fit: contain;
+  object-position: center;
 }
 
 .identityCopy {
@@ -315,78 +316,118 @@
 }
 
 .manifesto {
-  padding-block: clamp(7rem, 11vw, 11rem);
+  padding-block: clamp(6.5rem, 9vw, 9rem);
   background:
-    radial-gradient(circle at 78% 32%, rgba(183, 154, 92, 0.1), transparent 28%),
+    radial-gradient(circle at 78% 32%, rgba(183, 154, 92, 0.07), transparent 28%),
     #000;
 }
 
 .manifestoInner {
-  width: min(calc(100% - 3rem), 66rem);
+  width: min(calc(100% - 3rem), 72rem);
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.82fr) minmax(0, 1.18fr);
+  align-items: start;
+  gap: clamp(3.5rem, 8vw, 8rem);
 }
 
 .manifesto h2 {
-  max-width: 14ch;
-  margin-bottom: clamp(3.5rem, 6vw, 6rem);
+  max-width: 12ch;
+  margin-bottom: 0;
   color: var(--color-white);
   font-family: var(--font-body);
-  font-size: clamp(3.2rem, 5.8vw, 5.6rem);
+  font-size: clamp(2.8rem, 4.4vw, 4.45rem);
   font-weight: 600;
   letter-spacing: -0.045em;
-  line-height: 0.98;
+  line-height: 1;
 }
 
 .manifestoLines {
+  counter-reset: manifesto-principle;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid rgba(214, 189, 131, 0.24);
 }
 
 .manifestoLines span {
-  padding: 1.25rem 1.5rem 0 0;
-  color: rgba(248, 246, 239, 0.58);
-  font-size: 0.82rem;
-  line-height: 1.5;
+  counter-increment: manifesto-principle;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 1.35rem;
+  color: rgba(248, 246, 239, 0.78);
+  border-bottom: 1px solid rgba(248, 246, 239, 0.14);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.45;
+}
+
+.manifestoLines span::before {
+  content: "0" counter(manifesto-principle);
+  color: rgba(214, 189, 131, 0.62);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
 .recognition {
-  padding-block: clamp(6.5rem, 10vw, 10rem);
+  padding-block: clamp(6rem, 8vw, 8rem);
   background: #141414;
 }
 
 .recognitionGrid {
-  width: min(calc(100% - 3rem), 68rem);
+  width: min(calc(100% - 3rem), 72rem);
   display: grid;
-  grid-template-columns: minmax(220px, 0.6fr) minmax(0, 1.4fr);
-  align-items: center;
-  gap: clamp(4rem, 10vw, 10rem);
+  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+  align-items: stretch;
+  gap: clamp(3rem, 6vw, 6rem);
 }
 
 .recognitionNumber {
+  position: relative;
   display: grid;
-  justify-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  border-block: 1px solid rgba(214, 189, 131, 0.24);
+}
+
+.recognitionNumber::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  width: clamp(3.5rem, 9vw, 7rem);
+  height: 1px;
+  content: "";
+  background: var(--color-gold-light);
 }
 
 .recognitionNumber strong {
   color: var(--color-gold-light);
   font-family: var(--font-body);
-  font-size: clamp(7rem, 14vw, 12rem);
+  font-size: clamp(7rem, 11vw, 10rem);
   font-weight: 600;
   letter-spacing: -0.07em;
-  line-height: 0.68;
+  line-height: 0.7;
 }
 
 .recognitionNumber span {
-  margin-top: 1.5rem;
-  color: rgba(248, 246, 239, 0.5);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  max-width: 9rem;
+  padding-bottom: 0.25rem;
+  color: rgba(248, 246, 239, 0.64);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
   text-transform: uppercase;
 }
 
 .recognitionStory {
-  padding-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
   border-top: 1px solid rgba(248, 246, 239, 0.18);
+  border-bottom: 1px solid rgba(248, 246, 239, 0.18);
 }
 
 .recognition h2 {
@@ -397,7 +438,7 @@
 
 .recognitionStory > p {
   max-width: 36rem;
-  margin-bottom: 2.75rem;
+  margin-bottom: 2rem;
   color: rgba(248, 246, 239, 0.67);
   font-size: 1rem;
   line-height: 1.75;
@@ -409,7 +450,8 @@
   align-items: baseline;
   gap: 2rem;
   padding-block: 1.25rem;
-  border-block: 1px solid rgba(214, 189, 131, 0.24);
+  border-top: 1px solid rgba(214, 189, 131, 0.24);
+  border-bottom: 0;
 }
 
 .eventLine strong {
@@ -649,11 +691,7 @@
   }
 
   .identityMedia picture {
-    aspect-ratio: 4 / 3;
-  }
-
-  .identityMedia img {
-    object-position: 64% center;
+    aspect-ratio: 43 / 24;
   }
 
   .identityCopy {
@@ -671,6 +709,7 @@
 
   .manifestoInner {
     width: min(calc(100% - 2rem), var(--container));
+    display: block;
   }
 
   .manifesto h2 {
@@ -683,12 +722,29 @@
   }
 
   .manifestoLines span {
+    display: block;
     padding: 0.9rem 0;
     border-bottom: 1px solid rgba(214, 189, 131, 0.16);
+    font-size: 0.82rem;
+  }
+
+  .manifestoLines span::before {
+    display: none;
   }
 
   .recognitionGrid {
     gap: 3rem;
+  }
+
+  .recognitionNumber {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-block: 0;
+    border-block: 0;
+  }
+
+  .recognitionNumber::after {
+    display: none;
   }
 
   .recognitionNumber strong {
@@ -697,10 +753,14 @@
 
   .recognitionNumber span {
     margin-top: 1.1rem;
+    padding-bottom: 0;
   }
 
   .recognitionStory {
+    display: block;
     padding-top: 1.4rem;
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 
   .recognitionStory > p {

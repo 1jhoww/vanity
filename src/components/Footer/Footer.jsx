@@ -1,24 +1,19 @@
-import { Instagram, MessageCircle } from "lucide-react";
+import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { Link } from "react-router";
+import {
+  brandInfo,
+  contactInfo,
+  developerCredit
+} from "../../config/site";
 import Container from "../Container/Container";
 import styles from "./Footer.module.css";
 
-const linkGroups = [
-  {
-    title: "Institucional",
-    links: [
-      { label: "A Marca", to: "/a-marca" },
-      { label: "Contato", to: "/contato" },
-      { label: "Privacidade", to: "/politica-de-privacidade" }
-    ]
-  },
-  {
-    title: "Produtos",
-    links: [
-      { label: "Fragrâncias", to: "/fragrancias" },
-      { label: "Onde Comprar", to: "/onde-comprar" }
-    ]
-  }
+const navigation = [
+  { label: "A Marca", to: "/a-marca" },
+  { label: "Fragrâncias", to: "/fragrancias" },
+  { label: "Onde Comprar", to: "/onde-comprar" },
+  { label: "Contato", to: "/contato" },
+  { label: "Privacidade", to: "/politica-de-privacidade" }
 ];
 
 function Footer() {
@@ -36,41 +31,86 @@ function Footer() {
                 loading="lazy"
               />
             </Link>
-            <p>
-              Perfumes para cães e gatos, com apresentações para diferentes
-              momentos e para o uso profissional.
+            <p className={styles.brandDescription}>{brandInfo.description}</p>
+            <p className={styles.relationship}>
+              {brandInfo.legalRelationship}
             </p>
-            <small>50 ml · 500 ml</small>
           </div>
 
-          {linkGroups.map((group) => (
-            <nav key={group.title} aria-label={group.title}>
-              <h2>{group.title}</h2>
-              {group.links.map((link) => (
-                <Link key={link.to} to={link.to}>
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          ))}
+          <nav className={styles.navigation} aria-label="Navegação do rodapé">
+            <h2>Navegação</h2>
+            {navigation.map((item) => (
+              <Link key={item.to} to={item.to}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-          <div className={styles.social}>
-            <h2>Atendimento</h2>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">
-              <Instagram aria-hidden="true" size={17} /> Instagram
+          <div className={styles.contact}>
+            <h2>Contato</h2>
+            <a
+              href={contactInfo.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram ${contactInfo.instagramHandle}`}
+            >
+              <Instagram aria-hidden="true" size={17} />
+              {contactInfo.instagramHandle}
             </a>
-            <a href="https://wa.me/5500000000000" target="_blank" rel="noreferrer">
-              <MessageCircle aria-hidden="true" size={17} /> WhatsApp
+            <a
+              href={contactInfo.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`WhatsApp ${contactInfo.phoneDisplay}`}
+            >
+              <MessageCircle aria-hidden="true" size={17} />
+              {contactInfo.phoneDisplay}
             </a>
-            <a href="mailto:contato@vanitypet.com.br">E-mail comercial</a>
+            <a href={contactInfo.emailUrl}>
+              <Mail aria-hidden="true" size={17} />
+              {contactInfo.email}
+            </a>
           </div>
         </div>
 
         <div className={styles.bottom}>
-          <span>© {new Date().getFullYear()} Vanity Pet. Todos os direitos reservados.</span>
-          <span>
-            Desenvolvido por <em>Hepta Studios</em>
-          </span>
+          <div className={styles.copyright}>
+            <span>
+              © {new Date().getFullYear()} {brandInfo.name}. Todos os direitos
+              reservados.
+            </span>
+          </div>
+
+          <div
+            className={styles.credit}
+            aria-label="Créditos de desenvolvimento"
+          >
+            <span className={styles.creditLabel}>Desenvolvido por</span>
+            <a
+              className={styles.creditLogo}
+              href={developerCredit.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Site oficial da ${developerCredit.name}`}
+            >
+              <img
+                src={developerCredit.logoSrc}
+                alt=""
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+            </a>
+            <a
+              className={styles.creditInstagram}
+              href={developerCredit.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Instagram da ${developerCredit.name} — ${developerCredit.instagramHandle}`}
+            >
+              <Instagram aria-hidden="true" size={17} />
+            </a>
+          </div>
         </div>
       </Container>
     </footer>

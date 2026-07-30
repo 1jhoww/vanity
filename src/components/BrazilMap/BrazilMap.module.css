@@ -1,0 +1,175 @@
+.figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  min-height: 0;
+  overflow: visible;
+  padding: clamp(1rem, 2.6vw, 2.1rem);
+  border: 1px solid rgba(214, 189, 131, 0.17);
+  background:
+    radial-gradient(circle at 17% 14%, rgba(183, 154, 92, 0.11), transparent 32%),
+    #0b0b0b;
+}
+
+.frame::before {
+  position: absolute;
+  inset: 1rem;
+  content: "";
+  border: 1px solid rgba(248, 246, 239, 0.045);
+  pointer-events: none;
+}
+
+.map {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 48rem;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  max-height: none;
+  overflow: visible;
+  transform: none;
+}
+
+.state {
+  outline: none;
+}
+
+.shape,
+.hitArea {
+  vector-effect: non-scaling-stroke;
+}
+
+.shape {
+  stroke: #111;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  transition:
+    fill 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease,
+    filter 220ms ease;
+}
+
+.hitArea {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+
+.unavailable {
+  cursor: default;
+}
+
+.unavailable .shape {
+  fill: #252525;
+  stroke: #0e0e0e;
+}
+
+.available {
+  cursor: pointer;
+}
+
+.available .shape {
+  fill: #8d7647;
+  stroke: #141414;
+}
+
+.available:hover .shape,
+.available:focus-visible .shape {
+  fill: var(--color-gold-light);
+  stroke: #f8f6ef;
+  stroke-width: 2;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+}
+
+.available:focus-visible .shape {
+  stroke-width: 3;
+}
+
+.highlighted .shape {
+  fill: #b79a5c;
+  stroke: rgba(248, 246, 239, 0.8);
+  stroke-width: 2.4;
+  stroke-dasharray: 5 3;
+}
+
+.selected .shape,
+.selected:hover .shape,
+.selected:focus-visible .shape {
+  fill: var(--color-gold-light);
+  stroke: #fff;
+  stroke-width: 3;
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.58));
+}
+
+.caption {
+  display: grid;
+  gap: 0.85rem;
+  padding-top: 1rem;
+}
+
+.caption p {
+  margin: 0;
+  color: rgba(248, 246, 239, 0.52);
+  font-size: 0.7rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: rgba(248, 246, 239, 0.54);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.legend li > span {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.legendAvailable {
+  background: #8d7647;
+}
+
+.legendUnavailable {
+  background: #252525;
+}
+
+.legendSelected {
+  border-color: #fff !important;
+  background: var(--color-gold-light);
+}
+
+@media (max-width: 680px) {
+  .frame {
+    padding: 0.75rem;
+  }
+
+  .frame::before {
+    inset: 0.75rem;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape {
+    transition: none;
+  }
+
+}

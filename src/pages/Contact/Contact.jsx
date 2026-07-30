@@ -1,23 +1,34 @@
-import { Instagram, Mail, MessageCircle, Phone } from "lucide-react";
+import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 import { PrimaryButton } from "../../components/Button/Button";
 import Container from "../../components/Container/Container";
-import PageHero from "../../components/PageHero/PageHero";
 import Reveal from "../../components/Reveal/Reveal";
 import SEO from "../../components/SEO/SEO";
+import { contactInfo } from "../../config/site";
 import { submitContact } from "../../utils/submitContact";
 import styles from "./Contact.module.css";
 
 const initialForm = {
   name: "",
   company: "",
-  email: "",
-  phone: "",
   city: "",
   state: "",
+  phone: "",
+  email: "",
   subject: "",
   message: ""
 };
+
+const fieldOrder = [
+  "name",
+  "city",
+  "state",
+  "phone",
+  "email",
+  "subject",
+  "message"
+];
 
 const subjects = [
   "Quero revender",
@@ -31,17 +42,30 @@ const subjects = [
 
 function validate(form) {
   const errors = {};
-  if (!form.name.trim()) errors.name = "Informe seu nome.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+  const phoneDigits = form.phone.replace(/\D/g, "");
+
+  if (form.name.trim().length < 2) {
+    errors.name = "Informe seu nome.";
+  }
+  if (!form.city.trim()) {
+    errors.city = "Informe sua cidade.";
+  }
+  if (!/^[A-Za-z]{2}$/.test(form.state.trim())) {
+    errors.state = "Informe a UF com duas letras.";
+  }
+  if (phoneDigits.length < 10 || phoneDigits.length > 13) {
+    errors.phone = "Informe um telefone válido com DDD.";
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
     errors.email = "Informe um e-mail válido.";
   }
-  if (!form.phone.trim()) errors.phone = "Informe um telefone.";
-  if (!form.city.trim()) errors.city = "Informe sua cidade.";
-  if (!form.state.trim()) errors.state = "Informe seu estado.";
-  if (!form.subject) errors.subject = "Selecione um assunto.";
+  if (!form.subject) {
+    errors.subject = "Selecione um assunto.";
+  }
   if (form.message.trim().length < 10) {
     errors.message = "Escreva uma mensagem com pelo menos 10 caracteres.";
   }
+
   return errors;
 }
 
@@ -49,183 +73,250 @@ function Contact() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   const updateField = (event) => {
-    const { name, value } = event.target;
+    const { name } = event.target;
+    const value =
+      name === "state"
+        ? event.target.value.replace(/[^A-Za-z]/g, "").toUpperCase().slice(0, 2)
+        : event.target.value;
+
     setForm((current) => ({ ...current, [name]: value }));
     if (errors[name]) {
       setErrors((current) => ({ ...current, [name]: undefined }));
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    const formElement = event.currentTarget;
     const nextErrors = validate(form);
     setErrors(nextErrors);
     setStatus("");
 
     if (Object.keys(nextErrors).length) {
+      const firstInvalidField = fieldOrder.find((name) => nextErrors[name]);
       setStatus("Revise os campos indicados antes de continuar.");
+      window.requestAnimationFrame(() => {
+        formElement.elements.namedItem(firstInvalidField)?.focus();
+      });
       return;
     }
 
-    setSubmitting(true);
-    const response = await submitContact(form);
-    setStatus(response.message);
-    setSubmitting(false);
-    if (response.ok) setForm(initialForm);
+    const response = submitContact(form);
+    setWhatsappUrl(response.url);
+
+    try {
+      window.open(response.url, "_blank", "noopener,noreferrer");
+      setStatus(response.message);
+    } catch {
+      setStatus(
+        "Não foi possível abrir o WhatsApp automaticamente. Use o link abaixo para continuar."
+      );
+    }
   };
+
+  const errorProps = (name) => ({
+    "aria-invalid": Boolean(errors[name]),
+    "aria-describedby": errors[name] ? `${name}-error` : undefined
+  });
 
   return (
     <>
       <SEO
         title="Contato"
-        description="Entre em contato com a Vanity Pet para conhecer as fragrâncias, revenda, distribuição, parcerias e atendimento."
+        description="Fale com a Vanity Pet pelo WhatsApp sobre fragrâncias, revenda, distribuição, parcerias e atendimento."
         path="/contato"
-      />
-      <PageHero
-        eyebrow="Contato"
-        title="Fale com a Vanity Pet."
-        text="Envie sua mensagem sobre produtos, revenda, distribuição, parcerias ou atendimento."
-        compact
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          mainEntity: {
+            "@type": "Organization",
+            name: "Vanity Pet",
+            email: contactInfo.email,
+            telephone: `+${contactInfo.phoneRaw}`,
+            sameAs: [contactInfo.instagramUrl]
+          }
+        }}
       />
 
-      <section className={`section ${styles.contact}`}>
-        <Container className={styles.contactGrid}>
-          <Reveal className={styles.info}>
-            <span className={styles.kicker}>Atendimento</span>
-            <h2>Escolha o canal mais conveniente.</h2>
+      <header className={styles.opening}>
+        <Container className={styles.openingInner}>
+          <Reveal>
+            <span className={styles.eyebrow}>Contato</span>
+            <h1>Vamos conversar.</h1>
+          </Reveal>
+          <Reveal className={styles.openingCopy} delay={80}>
             <p>
-              Use o formulário para falar sobre produtos ou oportunidades
-              comerciais. Os contatos diretos abaixo devem ser confirmados antes
-              da publicação.
+              Produtos, revenda, distribuição ou parcerias: organize sua
+              solicitação e continue diretamente pelo WhatsApp oficial.
+            </p>
+          </Reveal>
+        </Container>
+      </header>
+
+      <main className={styles.contact}>
+        <Container className={styles.contactGrid}>
+          <Reveal as="aside" className={styles.info}>
+            <span className={styles.eyebrow}>Canais oficiais</span>
+            <h2>Fale com a equipe Vanity Pet.</h2>
+            <p>
+              Escolha um canal direto ou preencha o formulário para iniciar uma
+              conversa com as informações já organizadas.
             </p>
 
             <div className={styles.channels}>
-              <a href="https://wa.me/5500000000000" target="_blank" rel="noreferrer">
+              <a
+                href={contactInfo.whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <MessageCircle aria-hidden="true" strokeWidth={1.2} />
                 <span>
                   <small>WhatsApp</small>
-                  (00) 00000-0000
+                  {contactInfo.phoneDisplay}
                 </span>
               </a>
-              <a href="mailto:comercial@vanitypet.com.br">
+              <a href={contactInfo.emailUrl}>
                 <Mail aria-hidden="true" strokeWidth={1.2} />
                 <span>
-                  <small>E-mail comercial</small>
-                  comercial@vanitypet.com.br
+                  <small>E-mail</small>
+                  {contactInfo.email}
                 </span>
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <a
+                href={contactInfo.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Instagram aria-hidden="true" strokeWidth={1.2} />
                 <span>
                   <small>Instagram</small>
-                  @vanitypet
+                  {contactInfo.instagramHandle}
                 </span>
               </a>
-              <div>
-                <Phone aria-hidden="true" strokeWidth={1.2} />
-                <span>
-                  <small>Atendimento</small>
-                  Segunda a sexta, 9h às 18h
-                </span>
-              </div>
+            </div>
+
+            <div className={styles.editorialNote}>
+              <span>Atendimento direto</span>
+              <p>
+                O envio não armazena dados no site. A mensagem é preparada no
+                seu dispositivo e aberta no WhatsApp.
+              </p>
             </div>
           </Reveal>
 
-          <Reveal className={styles.formWrap} delay={120}>
+          <Reveal className={styles.formWrap} delay={100}>
             <form onSubmit={handleSubmit} noValidate>
               <div className={styles.formHeader}>
-                <h2>Preencha seus dados.</h2>
-                <p>
-                  O formulário valida as informações; o envio será ativado quando
-                  o canal oficial for definido.
-                </p>
+                <span className={styles.eyebrow}>Sua mensagem</span>
+                <h2>Conte o que você precisa.</h2>
+                <p>Campos marcados com * são obrigatórios.</p>
               </div>
+
               <div className={styles.formGrid}>
-                <label>
+                <label htmlFor="contact-name">
                   <span>Nome *</span>
                   <input
-                    className="form-control"
+                    id="contact-name"
                     name="name"
                     value={form.name}
                     onChange={updateField}
                     autoComplete="name"
-                    aria-invalid={Boolean(errors.name)}
+                    {...errorProps("name")}
                   />
-                  {errors.name && <small className="field-error">{errors.name}</small>}
+                  {errors.name && (
+                    <small id="name-error">{errors.name}</small>
+                  )}
                 </label>
-                <label>
-                  <span>Empresa</span>
+
+                <label htmlFor="contact-company">
+                  <span>Empresa ou estabelecimento</span>
                   <input
-                    className="form-control"
+                    id="contact-company"
                     name="company"
                     value={form.company}
                     onChange={updateField}
                     autoComplete="organization"
                   />
                 </label>
-                <label>
-                  <span>E-mail *</span>
+
+                <label htmlFor="contact-city">
+                  <span>Cidade *</span>
                   <input
-                    className="form-control"
-                    type="email"
-                    name="email"
-                    value={form.email}
+                    id="contact-city"
+                    name="city"
+                    value={form.city}
                     onChange={updateField}
-                    autoComplete="email"
-                    aria-invalid={Boolean(errors.email)}
+                    autoComplete="address-level2"
+                    {...errorProps("city")}
                   />
-                  {errors.email && <small className="field-error">{errors.email}</small>}
+                  {errors.city && (
+                    <small id="city-error">{errors.city}</small>
+                  )}
                 </label>
-                <label>
-                  <span>Telefone *</span>
+
+                <label htmlFor="contact-state">
+                  <span>Estado *</span>
                   <input
-                    className="form-control"
+                    id="contact-state"
+                    name="state"
+                    value={form.state}
+                    onChange={updateField}
+                    autoComplete="address-level1"
+                    inputMode="text"
+                    maxLength="2"
+                    placeholder="UF"
+                    {...errorProps("state")}
+                  />
+                  {errors.state && (
+                    <small id="state-error">{errors.state}</small>
+                  )}
+                </label>
+
+                <label htmlFor="contact-phone">
+                  <span>Telefone / WhatsApp *</span>
+                  <input
+                    id="contact-phone"
                     type="tel"
                     name="phone"
                     value={form.phone}
                     onChange={updateField}
                     autoComplete="tel"
-                    aria-invalid={Boolean(errors.phone)}
+                    inputMode="tel"
+                    {...errorProps("phone")}
                   />
-                  {errors.phone && <small className="field-error">{errors.phone}</small>}
+                  {errors.phone && (
+                    <small id="phone-error">{errors.phone}</small>
+                  )}
                 </label>
-                <label>
-                  <span>Cidade *</span>
+
+                <label htmlFor="contact-email">
+                  <span>E-mail *</span>
                   <input
-                    className="form-control"
-                    name="city"
-                    value={form.city}
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    value={form.email}
                     onChange={updateField}
-                    autoComplete="address-level2"
-                    aria-invalid={Boolean(errors.city)}
+                    autoComplete="email"
+                    inputMode="email"
+                    {...errorProps("email")}
                   />
-                  {errors.city && <small className="field-error">{errors.city}</small>}
+                  {errors.email && (
+                    <small id="email-error">{errors.email}</small>
+                  )}
                 </label>
-                <label>
-                  <span>Estado *</span>
-                  <input
-                    className="form-control"
-                    name="state"
-                    value={form.state}
-                    onChange={updateField}
-                    autoComplete="address-level1"
-                    maxLength="2"
-                    placeholder="UF"
-                    aria-invalid={Boolean(errors.state)}
-                  />
-                  {errors.state && <small className="field-error">{errors.state}</small>}
-                </label>
-                <label className={styles.full}>
+
+                <label className={styles.full} htmlFor="contact-subject">
                   <span>Assunto *</span>
                   <select
-                    className="form-control"
+                    id="contact-subject"
                     name="subject"
                     value={form.subject}
                     onChange={updateField}
-                    aria-invalid={Boolean(errors.subject)}
+                    {...errorProps("subject")}
                   >
                     <option value="">Selecione uma opção</option>
                     {subjects.map((subject) => (
@@ -235,37 +326,55 @@ function Contact() {
                     ))}
                   </select>
                   {errors.subject && (
-                    <small className="field-error">{errors.subject}</small>
+                    <small id="subject-error">{errors.subject}</small>
                   )}
                 </label>
-                <label className={styles.full}>
+
+                <label className={styles.full} htmlFor="contact-message">
                   <span>Mensagem *</span>
                   <textarea
-                    className="form-control"
+                    id="contact-message"
                     name="message"
+                    rows="6"
                     value={form.message}
                     onChange={updateField}
-                    aria-invalid={Boolean(errors.message)}
+                    {...errorProps("message")}
                   />
                   {errors.message && (
-                    <small className="field-error">{errors.message}</small>
+                    <small id="message-error">{errors.message}</small>
                   )}
                 </label>
               </div>
 
               <div className={styles.formFooter}>
-                <p>Ao enviar, você concorda com nossa política de privacidade.</p>
-                <PrimaryButton type="submit" disabled={submitting}>
-                  {submitting ? "Validando..." : "Validar formulário"}
+                <p>
+                  Ao continuar, consulte nossa{" "}
+                  <Link to="/politica-de-privacidade">
+                    política de privacidade
+                  </Link>
+                  .
+                </p>
+                <PrimaryButton type="submit">
+                  Enviar pelo WhatsApp
                 </PrimaryButton>
               </div>
-              <p className={styles.status} aria-live="polite">
-                {status}
-              </p>
+
+              <div className={styles.status} aria-live="polite">
+                {status && <p>{status}</p>}
+                {whatsappUrl && (
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Abrir WhatsApp novamente
+                  </a>
+                )}
+              </div>
             </form>
           </Reveal>
         </Container>
-      </section>
+      </main>
     </>
   );
 }

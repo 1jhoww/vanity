@@ -5,6 +5,7 @@ import Button, {
 import Container from "../../components/Container/Container";
 import Reveal from "../../components/Reveal/Reveal";
 import SEO from "../../components/SEO/SEO";
+import { contactInfo } from "../../config/site";
 import styles from "./Home.module.css";
 
 const fragranceGroups = [
@@ -63,7 +64,17 @@ function Home() {
           "@type": "Organization",
           name: "Vanity Pet",
           url: "https://www.vanitypet.com.br",
-          logo: "https://www.vanitypet.com.br/brand/vanity-pet-logo.png"
+          logo: "https://www.vanitypet.com.br/brand/vanity-pet-logo.png",
+          email: contactInfo.email,
+          telephone: `+${contactInfo.phoneRaw}`,
+          sameAs: [contactInfo.instagramUrl],
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "customer service",
+            telephone: `+${contactInfo.phoneRaw}`,
+            email: contactInfo.email,
+            availableLanguage: "Portuguese"
+          }
         }}
       />
 
