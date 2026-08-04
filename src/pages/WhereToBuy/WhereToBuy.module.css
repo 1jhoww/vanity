@@ -294,24 +294,20 @@
 
 .partner {
   width: 100%;
-  min-height: 7.25rem;
   display: grid;
   grid-template-columns: 1.75rem minmax(0, 1fr);
-  align-items: center;
-  gap: 1rem;
-  padding: 1.25rem 0;
+  align-content: start;
+  gap: 0 1rem;
   color: var(--color-white);
-  border: 0;
   border-top: 1px solid rgba(248, 246, 239, 0.14);
   background: transparent;
-  text-align: left;
   transition:
     background 180ms ease,
     padding 180ms ease;
 }
 
 .partner:hover,
-.partner:focus-visible,
+.partner:focus-within,
 .partnerActive {
   padding-inline: 0.75rem;
   background: linear-gradient(
@@ -323,6 +319,26 @@
 
 .partnerActive {
   box-shadow: inset 2px 0 var(--color-gold-light);
+}
+
+.partnerMain {
+  width: 100%;
+  min-height: 7.25rem;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.partnerMain:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: -3px;
 }
 
 .partnerIndex {
@@ -352,6 +368,19 @@
   line-height: 1.35;
 }
 
+.partnerCoverage {
+  width: fit-content;
+  margin-top: 0.1rem;
+  padding: 0.24rem 0.42rem;
+  color: var(--color-gold-light);
+  border: 1px solid rgba(214, 189, 131, 0.28);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
 .partnerCopy svg {
   flex: 0 0 auto;
   width: 0.8rem;
@@ -367,6 +396,60 @@
   font-size: 0.6rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.partnerContacts {
+  grid-column: 2;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0 0 1rem;
+}
+
+.partnerContacts a {
+  min-height: 2.75rem;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  color: rgba(248, 246, 239, 0.76);
+  border: 1px solid rgba(214, 189, 131, 0.38);
+  background: rgba(214, 189, 131, 0.04);
+  font-family: var(--font-site);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.partnerContacts a:hover,
+.partnerContacts a:focus-visible {
+  color: var(--color-white);
+  border-color: var(--color-gold-light);
+  background: rgba(214, 189, 131, 0.14);
+}
+
+.partnerContacts a:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+.partnerContacts svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--color-gold-light);
+}
+
+.partnerContacts strong {
+  justify-self: end;
+  overflow-wrap: anywhere;
+  color: var(--color-white);
+  font-size: 0.68rem;
 }
 
 .emptyState {
@@ -579,6 +662,10 @@
     padding-right: 0;
   }
 
+  .partnerMain {
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+  }
+
   .partnerRegion {
     display: none;
   }
@@ -600,8 +687,17 @@
     gap: 0.45rem;
   }
 
+  .partnerMain {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+
   .partnerIndex {
     display: none;
+  }
+
+  .partnerContacts {
+    grid-column: 1;
   }
 }
 

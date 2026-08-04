@@ -46,8 +46,8 @@ function BrazilMap({
             Mapa interativo dos distribuidores Vanity Pet no Brasil
           </title>
           <desc id="vanity-map-description">
-            Os estados dourados possuem distribuidores. Selecione um estado
-            para filtrar a lista.
+            Os estados dourados possuem cobertura comercial. Selecione um
+            estado para filtrar a lista.
           </desc>
 
           {states.map((state) => {
@@ -71,7 +71,7 @@ function BrazilMap({
                   key={state.uf}
                   className={className}
                   role="img"
-                  aria-label={`${state.name}, sem distribuidor cadastrado`}
+                  aria-label={`${state.name}, sem cobertura cadastrada`}
                   aria-disabled="true"
                 >
                   <path className={styles.shape} d={state.d} />
@@ -86,7 +86,7 @@ function BrazilMap({
                 role="button"
                 tabIndex="0"
                 aria-pressed={isSelected}
-                aria-label={`${state.name}, estado com distribuidores. ${
+                aria-label={`${state.name}, estado com cobertura comercial. ${
                   isSelected ? "Remover filtro" : "Filtrar por este estado"
                 }.`}
                 onClick={() => onToggleState(state.uf)}
@@ -109,15 +109,15 @@ function BrazilMap({
       </div>
 
       <figcaption className={styles.caption}>
-        <p>Selecione um estado dourado para filtrar a rede.</p>
+        <p>Selecione um estado dourado para consultar a cobertura.</p>
         <ul className={styles.legend} aria-label="Legenda do mapa">
           <li>
             <span className={styles.legendAvailable} aria-hidden="true" />
-            Com distribuidores
+            Com cobertura
           </li>
           <li>
             <span className={styles.legendUnavailable} aria-hidden="true" />
-            Sem distribuidores
+            Sem cobertura
           </li>
           <li>
             <span className={styles.legendSelected} aria-hidden="true" />

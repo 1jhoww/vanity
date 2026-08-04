@@ -1,4 +1,4 @@
-import { MapPin, Search } from "lucide-react";
+import { MapPin, Phone, Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PrimaryButton } from "../../components/Button/Button";
 import BrazilMap from "../../components/BrazilMap/BrazilMap";
@@ -8,13 +8,22 @@ import SEO from "../../components/SEO/SEO";
 import brazilMap from "../../assets/maps/brazil-states-map.json";
 import { contactInfo } from "../../config/site";
 import { distributors } from "../../data/distributors";
+import {
+  countCoverageByState,
+  getCoverageRegions,
+  getCoverageSearchText,
+  getServedStates,
+  listCoveredStates,
+  normalizeStateCode,
+  servesState
+} from "../../utils/distributorCoverage";
 import styles from "./WhereToBuy.module.css";
 
 const stateNames = Object.fromEntries(
   brazilMap.states.map(({ uf, name }) => [uf, name])
 );
-const states = [...new Set(distributors.map((item) => item.state))].sort();
-const regions = [...new Set(distributors.map((item) => item.region))].sort(
+const states = listCoveredStates(distributors);
+const regions = [...new Set(distributors.flatMap(getCoverageRegions))].sort(
   (first, second) => first.localeCompare(second, "pt-BR")
 );
 
@@ -25,11 +34,54 @@ function normalize(value = "") {
     .toLowerCase();
 }
 
-function countByState(items) {
-  return items.reduce((counts, item) => {
-    counts[item.state] = (counts[item.state] || 0) + 1;
-    return counts;
-  }, {});
+function distributorSearchText(distributor) {
+  return Object.values(distributor)
+    .flatMap((value) => (Array.isArray(value) ? value : [value]))
+    .filter((value) => typeof value === "string")
+    .join(" ");
+}
+
+function matchesDistributorSearch(distributor, search) {
+  if (!search) return true;
+
+  const searchedState = normalizeStateCode(search);
+  if (searchedState) return servesState(distributor, searchedState);
+
+  const haystack = normalize(
+    `${distributorSearchText(distributor)} ${getCoverageSearchText(
+      distributor
+    )}`
+  );
+
+  return haystack.includes(normalize(search));
+}
+
+function getWhatsapps(distributor) {
+  return [
+    distributor.whatsapp,
+    ...(distributor.additionalWhatsapps || [])
+  ].filter(Boolean);
+}
+
+function formatWhatsapp(value) {
+  const digits = value.replace(/\D/g, "");
+  const localNumber = digits.startsWith("55") ? digits.slice(2) : digits;
+
+  if (localNumber.length === 11) {
+    return `(${localNumber.slice(0, 2)}) ${localNumber.slice(
+      2,
+      7
+    )}-${localNumber.slice(7)}`;
+  }
+
+  if (localNumber.length === 10) {
+    return `(${localNumber.slice(0, 2)}) ${localNumber.slice(
+      2,
+      6
+    )}-${localNumber.slice(6)}`;
+  }
+
+  return `+${digits}`;
 }
 
 function distributorLabel(count) {
@@ -49,15 +101,10 @@ function WhereToBuy() {
   const mapCandidates = useMemo(
     () =>
       distributors.filter((item) => {
-        const haystack = normalize(
-          `${item.name} ${item.city} ${item.state} ${
-            stateNames[item.state] || ""
-          } ${item.region}`
-        );
-
         return (
-          (!filters.search || haystack.includes(normalize(filters.search))) &&
-          (!filters.region || item.region === filters.region)
+          matchesDistributorSearch(item, filters.search) &&
+          (!filters.region ||
+            getCoverageRegions(item).includes(filters.region))
         );
       }),
     [filters.region, filters.search]
@@ -66,12 +113,15 @@ function WhereToBuy() {
   const results = useMemo(
     () =>
       mapCandidates.filter(
-        (item) => !filters.state || item.state === filters.state
+        (item) => !filters.state || servesState(item, filters.state)
       ),
     [filters.state, mapCandidates]
   );
 
-  const counts = useMemo(() => countByState(mapCandidates), [mapCandidates]);
+  const counts = useMemo(
+    () => countCoverageByState(mapCandidates),
+    [mapCandidates]
+  );
   const activePartner =
     results.find((item) => item.id === activePartnerId) || null;
   const hasFilters = Boolean(
@@ -124,7 +174,11 @@ function WhereToBuy() {
     ? {
         eyebrow: "Distribuidor selecionado",
         title: activePartner.name,
-        text: `${activePartner.city} · ${stateNames[activePartner.state]} (${activePartner.state})`
+        text: `${activePartner.city} · ${stateNames[activePartner.state]} (${activePartner.state})${
+          filters.state && activePartner.state !== filters.state
+            ? ` · Atende ${stateNames[filters.state]}`
+            : ""
+        }`
       }
     : filters.state
       ? {
@@ -271,33 +325,85 @@ function WhereToBuy() {
                 <div className={styles.resultsList}>
                   {results.map((partner, index) => {
                     const isActive = activePartner?.id === partner.id;
+                    const whatsapps = getWhatsapps(partner);
+                    const servedStates = getServedStates(partner);
+                    const coverageLabel =
+                      filters.state && partner.state !== filters.state
+                        ? `Atende ${stateNames[filters.state]}`
+                        : servedStates.length > 1
+                          ? `Cobertura: ${servedStates.join(", ")}`
+                          : "";
 
                     return (
-                      <button
-                        type="button"
+                      <article
                         className={`${styles.partner} ${
                           isActive ? styles.partnerActive : ""
                         }`}
                         key={partner.id}
-                        aria-pressed={isActive}
-                        onClick={() =>
-                          setActivePartnerId(isActive ? "" : partner.id)
-                        }
                       >
-                        <span className={styles.partnerIndex}>
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className={styles.partnerCopy}>
-                          <strong>{partner.name}</strong>
-                          <small>
-                            <MapPin aria-hidden="true" strokeWidth={1.4} />
-                            {partner.city} · {partner.state}
-                          </small>
-                        </span>
-                        <span className={styles.partnerRegion}>
-                          {partner.region}
-                        </span>
-                      </button>
+                        <button
+                          type="button"
+                          className={styles.partnerMain}
+                          aria-pressed={isActive}
+                          aria-label={`${partner.name}, ${partner.city}, ${
+                            stateNames[partner.state]
+                          }. Destacar ${partner.state} no mapa.`}
+                          onClick={() =>
+                            setActivePartnerId(isActive ? "" : partner.id)
+                          }
+                        >
+                          <span className={styles.partnerIndex}>
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className={styles.partnerCopy}>
+                            <strong>{partner.name}</strong>
+                            <small>
+                              <MapPin aria-hidden="true" strokeWidth={1.4} />
+                              {partner.city} · {partner.state}
+                            </small>
+                            {coverageLabel && (
+                              <span className={styles.partnerCoverage}>
+                                {coverageLabel}
+                              </span>
+                            )}
+                          </span>
+                          <span className={styles.partnerRegion}>
+                            {partner.region}
+                          </span>
+                        </button>
+
+                        {whatsapps.length > 0 && (
+                          <div
+                            className={styles.partnerContacts}
+                            aria-label={`Contatos de ${partner.name}`}
+                          >
+                            {whatsapps.map((whatsapp, contactIndex) => (
+                              <a
+                                key={whatsapp}
+                                href={`https://wa.me/${whatsapp}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Abrir WhatsApp ${
+                                  contactIndex + 1
+                                } de ${partner.name}: ${formatWhatsapp(
+                                  whatsapp
+                                )}`}
+                              >
+                                <Phone
+                                  aria-hidden="true"
+                                  strokeWidth={1.5}
+                                />
+                                <span>
+                                  {contactIndex === 0
+                                    ? "WhatsApp"
+                                    : `WhatsApp ${contactIndex + 1}`}
+                                </span>
+                                <strong>{formatWhatsapp(whatsapp)}</strong>
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </article>
                     );
                   })}
                 </div>
