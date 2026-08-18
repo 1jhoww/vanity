@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import CatalogEmptyState from "../../components/CatalogEmptyState/CatalogEmptyState";
 import CatalogFilters from "../../components/CatalogFilters/CatalogFilters";
 import CatalogSearch from "../../components/CatalogSearch/CatalogSearch";
@@ -14,11 +15,18 @@ import {
 import styles from "./Products.module.css";
 
 const SEARCH_DELAY = 180;
+const fragranceFamilyIds = new Set(
+  fragranceFamilies.map((family) => family.id)
+);
 
 function Products() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [activeFamily, setActiveFamily] = useState("all");
+  const requestedFamily = searchParams.get("categoria") || "all";
+  const activeFamily = fragranceFamilyIds.has(requestedFamily)
+    ? requestedFamily
+    : "all";
 
   const catalogFragrances = useMemo(
     () => fragrances.filter((fragrance) => fragrance.available !== false),
@@ -69,9 +77,23 @@ function Products() {
     setDebouncedSearch("");
   };
 
+  const updateFamily = (familyId) => {
+    setSearchParams((currentParams) => {
+      const nextParams = new URLSearchParams(currentParams);
+
+      if (familyId === "all") {
+        nextParams.delete("categoria");
+      } else {
+        nextParams.set("categoria", familyId);
+      }
+
+      return nextParams;
+    });
+  };
+
   const resetCatalog = () => {
     clearSearch();
-    setActiveFamily("all");
+    updateFamily("all");
   };
 
   return (
@@ -114,7 +136,7 @@ function Products() {
             <CatalogFilters
               filters={fragranceFamilies}
               activeFilter={activeFamily}
-              onChange={setActiveFamily}
+              onChange={updateFamily}
             />
           </div>
 

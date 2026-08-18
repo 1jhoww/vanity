@@ -368,6 +368,12 @@
   line-height: 1.35;
 }
 
+.partnerContactName {
+  color: rgba(248, 246, 239, 0.68);
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+
 .partnerCoverage {
   width: fit-content;
   margin-top: 0.1rem;
@@ -396,6 +402,67 @@
   font-size: 0.6rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.partnerDetails {
+  grid-column: 2;
+  border-top: 1px solid rgba(248, 246, 239, 0.1);
+}
+
+.partnerDetails summary {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0;
+  color: rgba(248, 246, 239, 0.76);
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.partnerDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.partnerDetails summary small {
+  margin-left: auto;
+  color: var(--color-gold-light);
+  font: inherit;
+  font-size: 0.57rem;
+  letter-spacing: 0.04em;
+}
+
+.partnerDetails summary::after {
+  content: "+";
+  width: 1rem;
+  flex: 0 0 auto;
+  color: var(--color-gold-light);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1;
+  text-align: right;
+}
+
+.partnerDetails[open] summary::after {
+  content: "\2212";
+}
+
+.partnerDetails summary:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+.partnerDetails p {
+  margin: 0;
+  padding: 0 0 1rem;
+  overflow-wrap: anywhere;
+  color: rgba(248, 246, 239, 0.58);
+  font-size: 0.68rem;
+  line-height: 1.65;
 }
 
 .partnerContacts {
@@ -697,6 +764,10 @@
   }
 
   .partnerContacts {
+    grid-column: 1;
+  }
+
+  .partnerDetails {
     grid-column: 1;
   }
 }

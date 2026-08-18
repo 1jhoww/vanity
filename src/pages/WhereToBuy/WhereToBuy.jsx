@@ -26,6 +26,9 @@ const states = listCoveredStates(distributors);
 const regions = [...new Set(distributors.flatMap(getCoverageRegions))].sort(
   (first, second) => first.localeCompare(second, "pt-BR")
 );
+const whatsappMessage =
+  "Olá! Vim pelo site da Vanity Pet e gostaria de receber mais informações sobre os produtos.";
+const encodedWhatsappMessage = encodeURIComponent(whatsappMessage);
 
 function normalize(value = "") {
   return value
@@ -34,10 +37,23 @@ function normalize(value = "") {
     .toLowerCase();
 }
 
+function getCoverage(distributor) {
+  return [
+    ...(distributor.serviceCities || []),
+    ...(distributor.serviceAreas || [])
+  ];
+}
+
 function distributorSearchText(distributor) {
-  return Object.values(distributor)
-    .flatMap((value) => (Array.isArray(value) ? value : [value]))
-    .filter((value) => typeof value === "string")
+  return [
+    distributor.name,
+    distributor.contactName,
+    distributor.city,
+    distributor.state,
+    distributor.region,
+    ...getCoverage(distributor)
+  ]
+    .filter(Boolean)
     .join(" ");
 }
 
@@ -63,9 +79,27 @@ function getWhatsapps(distributor) {
   ].filter(Boolean);
 }
 
-function formatWhatsapp(value) {
+function getPhones(distributor) {
+  return [distributor.phone].filter(Boolean);
+}
+
+function normalizeWhatsapp(value = "") {
   const digits = value.replace(/\D/g, "");
-  const localNumber = digits.startsWith("55") ? digits.slice(2) : digits;
+
+  return digits.startsWith("55") && [12, 13].includes(digits.length)
+    ? digits
+    : `55${digits}`;
+}
+
+function getWhatsappUrl(value) {
+  return `https://wa.me/${normalizeWhatsapp(
+    value
+  )}?text=${encodedWhatsappMessage}`;
+}
+
+function formatWhatsapp(value) {
+  const normalizedNumber = normalizeWhatsapp(value);
+  const localNumber = normalizedNumber.slice(2);
 
   if (localNumber.length === 11) {
     return `(${localNumber.slice(0, 2)}) ${localNumber.slice(
@@ -81,7 +115,7 @@ function formatWhatsapp(value) {
     )}-${localNumber.slice(6)}`;
   }
 
-  return `+${digits}`;
+  return `+${normalizedNumber}`;
 }
 
 function distributorLabel(count) {
@@ -325,6 +359,8 @@ function WhereToBuy() {
                 <div className={styles.resultsList}>
                   {results.map((partner, index) => {
                     const isActive = activePartner?.id === partner.id;
+                    const coverage = getCoverage(partner);
+                    const phones = getPhones(partner);
                     const whatsapps = getWhatsapps(partner);
                     const servedStates = getServedStates(partner);
                     const coverageLabel =
@@ -357,6 +393,11 @@ function WhereToBuy() {
                           </span>
                           <span className={styles.partnerCopy}>
                             <strong>{partner.name}</strong>
+                            {partner.contactName && (
+                              <span className={styles.partnerContactName}>
+                                Contato comercial: {partner.contactName}
+                              </span>
+                            )}
                             <small>
                               <MapPin aria-hidden="true" strokeWidth={1.4} />
                               {partner.city} · {partner.state}
@@ -372,15 +413,41 @@ function WhereToBuy() {
                           </span>
                         </button>
 
-                        {whatsapps.length > 0 && (
+                        {coverage.length > 0 && (
+                          <details className={styles.partnerDetails}>
+                            <summary>
+                              <span>Área atendida</span>
+                              <small>Ver mais detalhes</small>
+                            </summary>
+                            <p>{coverage.join(" · ")}</p>
+                          </details>
+                        )}
+
+                        {(phones.length > 0 || whatsapps.length > 0) && (
                           <div
                             className={styles.partnerContacts}
                             aria-label={`Contatos de ${partner.name}`}
                           >
+                            {phones.map((phone) => (
+                              <a
+                                key={phone}
+                                href={`tel:+${phone.replace(/\D/g, "")}`}
+                                aria-label={`Ligar para ${
+                                  partner.name
+                                }: ${formatWhatsapp(phone)}`}
+                              >
+                                <Phone
+                                  aria-hidden="true"
+                                  strokeWidth={1.5}
+                                />
+                                <span>Telefone</span>
+                                <strong>{formatWhatsapp(phone)}</strong>
+                              </a>
+                            ))}
                             {whatsapps.map((whatsapp, contactIndex) => (
                               <a
                                 key={whatsapp}
-                                href={`https://wa.me/${whatsapp}`}
+                                href={getWhatsappUrl(whatsapp)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={`Abrir WhatsApp ${

@@ -65,7 +65,6 @@ function normalize(value = "") {
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 }
-
 const stateAliases = Object.fromEntries(
   Object.entries(stateNames).flatMap(([uf, name]) => [
     [normalize(uf), uf],

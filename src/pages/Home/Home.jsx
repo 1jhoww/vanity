@@ -10,6 +10,7 @@ import styles from "./Home.module.css";
 
 const fragranceGroups = [
   {
+    familyId: "floral",
     label: "Florais",
     title: "Fragrâncias florais",
     description:
@@ -18,6 +19,7 @@ const fragranceGroups = [
     alt: "Perfumes Flowers de 500 ml e 50 ml entre flores roxas"
   },
   {
+    familyId: "fruity",
     label: "Frutadas",
     title: "Fragrâncias frutadas",
     description:
@@ -27,6 +29,7 @@ const fragranceGroups = [
     alt: "Perfumes Mango de 500 ml e Strawberry de 50 ml entre frutas"
   },
   {
+    familyId: "gourmand",
     label: "Doces / Gourmand",
     title: "Fragrâncias doces e gourmand",
     description:
@@ -35,6 +38,7 @@ const fragranceGroups = [
     alt: "Perfumes Sweet de 500 ml e Illusion de 50 ml com chocolate, baunilha e caramelo"
   },
   {
+    familyId: "fresh",
     label: "Frescas / Cítricas",
     title: "Fragrâncias frescas e cítricas",
     description:
@@ -44,6 +48,7 @@ const fragranceGroups = [
     alt: "Perfumes Explosion de 500 ml e Citric de 50 ml com frutas cítricas"
   },
   {
+    familyId: "intense",
     label: "Intensas / Elegantes",
     title: "Fragrâncias intensas e elegantes",
     description:
@@ -174,7 +179,9 @@ function Home() {
                   <small>{group.label}</small>
                   <h3>{group.title}</h3>
                   <p>{group.description}</p>
-                  <PrimaryButton to="/fragrancias">
+                  <PrimaryButton
+                    to={`/fragrancias?categoria=${group.familyId}`}
+                  >
                     Explorar perfumes
                   </PrimaryButton>
                 </Reveal>

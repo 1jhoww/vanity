@@ -12,8 +12,8 @@ export const contactInfo = Object.freeze({
   phoneDisplay: "(11) 96232-0441",
   phoneRaw: "5511962320441",
   whatsappUrl: "https://wa.me/5511962320441",
-  email: "contato.vanitypet@gmail.com",
-  emailUrl: "mailto:contato.vanitypet@gmail.com"
+  email: "administrativo@orionpet.com.br",
+  emailUrl: "mailto:administrativo@orionpet.com.br"
 });
 
 export const developerCredit = Object.freeze({
