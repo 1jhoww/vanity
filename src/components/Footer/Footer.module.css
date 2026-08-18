@@ -110,7 +110,36 @@
 }
 
 .copyright {
+  display: grid;
+  gap: 0.55rem;
   line-height: 1.5;
+}
+
+.legal {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.legal a,
+.legal button {
+  min-height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  color: rgba(248, 246, 239, 0.5);
+  border: 0;
+  background: transparent;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  text-align: left;
+  transition: color var(--duration-fast) var(--ease-soft);
+}
+
+.legal a:hover,
+.legal button:hover {
+  color: var(--color-gold-light);
 }
 
 .credit {
@@ -221,6 +250,18 @@
     grid-template-columns: 1fr;
     gap: 1rem;
     padding-block: 1.25rem;
+  }
+
+  .legal {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .legal a,
+  .legal button {
+    width: 100%;
+    min-height: 2.5rem;
   }
 
   .credit {

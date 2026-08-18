@@ -9,6 +9,8 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail/ProductDetail"));
 const WhereToBuy = lazy(() => import("./pages/WhereToBuy/WhereToBuy"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 const Privacy = lazy(() => import("./pages/Privacy/Privacy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy/CookiePolicy"));
+const Terms = lazy(() => import("./pages/Terms/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
 function PageLoader() {
@@ -51,6 +53,8 @@ function App() {
           <Route path="onde-comprar" element={<WhereToBuy />} />
           <Route path="contato" element={<Contact />} />
           <Route path="politica-de-privacidade" element={<Privacy />} />
+          <Route path="politica-de-cookies" element={<CookiePolicy />} />
+          <Route path="termos-de-uso" element={<Terms />} />
           <Route path="404" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>

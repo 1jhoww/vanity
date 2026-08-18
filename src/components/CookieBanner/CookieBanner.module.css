@@ -1,0 +1,125 @@
+.banner {
+  position: fixed;
+  z-index: 120;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  width: min(calc(100% - 2rem), 72rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(1.35rem, 2.8vw, 2rem);
+  margin-inline: auto;
+  color: var(--color-white);
+  border: 1px solid rgba(214, 189, 131, 0.34);
+  background:
+    linear-gradient(110deg, rgba(214, 189, 131, 0.07), transparent 42%),
+    #080808;
+  box-shadow: 0 1.5rem 4.5rem rgba(0, 0, 0, 0.48);
+  font-family: var(--font-site);
+}
+
+.copy {
+  max-width: 46rem;
+}
+
+.copy > span {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: var(--color-gold-light);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.copy h2 {
+  margin-bottom: 0.55rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.7vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.copy p {
+  max-width: 43rem;
+  margin-bottom: 0;
+  color: rgba(248, 246, 239, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: grid;
+  justify-items: stretch;
+  gap: 0.65rem;
+  min-width: 16rem;
+}
+
+.actions button,
+.actions a {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.actions button {
+  color: #080808;
+  border: 1px solid var(--color-gold-light);
+  background: var(--color-gold-light);
+  transition:
+    color var(--duration-fast) var(--ease-soft),
+    background var(--duration-fast) var(--ease-soft);
+}
+
+.actions button:hover {
+  color: var(--color-white);
+  background: transparent;
+}
+
+.actions a {
+  color: rgba(248, 246, 239, 0.74);
+  border: 1px solid rgba(214, 189, 131, 0.28);
+  transition:
+    color var(--duration-fast) var(--ease-soft),
+    border-color var(--duration-fast) var(--ease-soft);
+}
+
+.actions a:hover {
+  color: var(--color-gold-light);
+  border-color: var(--color-gold-light);
+}
+
+@media (max-width: 720px) {
+  .banner {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 1.2rem;
+  }
+
+  .actions {
+    min-width: 0;
+  }
+
+  .actions button,
+  .actions a {
+    min-height: 3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .banner {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    left: 0.65rem;
+    width: calc(100% - 1.3rem);
+    padding: 1.15rem;
+  }
+}

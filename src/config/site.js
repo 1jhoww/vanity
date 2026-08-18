@@ -3,7 +3,16 @@ export const brandInfo = Object.freeze({
   description:
     "Perfumaria pet premium com fragrâncias importadas e fórmulas hipoalergênicas para cães e gatos.",
   legalRelationship:
-    "A Vanity Pet é uma marca da Orion Ind e Com de Cosméticos Ltda."
+    "A Vanity Pet é uma marca da Orion Ind e Com de Cosmeticos Ltda."
+});
+
+export const companyInfo = Object.freeze({
+  legalName: "Orion Ind e Com de Cosmeticos Ltda",
+  cnpj: "41.994.699/0001-30",
+  foundedAt: "18/05/2021",
+  registrationStatus: "Ativa",
+  address:
+    "R. Hawai, 77 - JD MARGARIDA - Vargem Grande Paulista/SP - CEP 06739-064"
 });
 
 export const contactInfo = Object.freeze({

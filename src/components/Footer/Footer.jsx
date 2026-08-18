@@ -5,6 +5,7 @@ import {
   contactInfo,
   developerCredit
 } from "../../config/site";
+import { COOKIE_PREFERENCES_EVENT } from "../../config/cookieConsent";
 import Container from "../Container/Container";
 import styles from "./Footer.module.css";
 
@@ -12,11 +13,20 @@ const navigation = [
   { label: "A Marca", to: "/a-marca" },
   { label: "Fragrâncias", to: "/fragrancias" },
   { label: "Onde Comprar", to: "/onde-comprar" },
-  { label: "Contato", to: "/contato" },
-  { label: "Privacidade", to: "/politica-de-privacidade" }
+  { label: "Contato", to: "/contato" }
+];
+
+const legalNavigation = [
+  { label: "Política de Privacidade", to: "/politica-de-privacidade" },
+  { label: "Política de Cookies", to: "/politica-de-cookies" },
+  { label: "Termos de Uso", to: "/termos-de-uso" }
 ];
 
 function Footer() {
+  const openCookiePreferences = () => {
+    window.dispatchEvent(new Event(COOKIE_PREFERENCES_EVENT));
+  };
+
   return (
     <footer className={styles.footer}>
       <Container>
@@ -79,13 +89,23 @@ function Footer() {
               © {new Date().getFullYear()} {brandInfo.name}. Todos os direitos
               reservados.
             </span>
+            <nav className={styles.legal} aria-label="Políticas e termos">
+              {legalNavigation.map((item) => (
+                <Link key={item.to} to={item.to}>
+                  {item.label}
+                </Link>
+              ))}
+              <button type="button" onClick={openCookiePreferences}>
+                Preferências de cookies
+              </button>
+            </nav>
           </div>
 
           <div
             className={styles.credit}
-            aria-label="Créditos de desenvolvimento"
+            aria-label="Créditos do site"
           >
-            <span className={styles.creditLabel}>Desenvolvido por</span>
+            <span className={styles.creditLabel}>Criação digital</span>
             <a
               className={styles.creditLogo}
               href={developerCredit.website}
