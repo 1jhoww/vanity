@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
       "source": "/colecao",
@@ -14,11 +15,25 @@
       "source": "/produtos",
       "destination": "/fragrancias",
       "permanent": true
+    },
+    {
+      "source": "/produtos/fragrancia-18",
+      "destination": "/produtos/you",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/fragrancia-19",
+      "destination": "/produtos/watermelon",
+      "permanent": true
     }
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/:page(a-marca|fragrancias|onde-comprar|contato|politica-de-privacidade|politica-de-cookies|termos-de-uso|404)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/produtos/:slug(baby|black-cherry|black-vanity|brown|choc|citric|explosion|flowers|glamour|gold|illusion|jasmin|mango|night|strawberry|style-g|sweet|watermelon|you)",
       "destination": "/index.html"
     }
   ]

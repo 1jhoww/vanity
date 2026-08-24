@@ -15,7 +15,7 @@ function FragranceCard({ product, index }) {
         <img
           className={styles.image}
           src={artwork.src}
-          alt={`${product.name}: frascos de 50 ml e 500 ml apresentados juntos`}
+          alt={`Perfume ${product.name} Vanity Pet em frascos de 50 ml e 500 ml`}
           width={artwork.width}
           height={artwork.height}
           style={{

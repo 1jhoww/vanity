@@ -48,6 +48,10 @@ function ProductDetail() {
     return <Navigate to="/404" replace />;
   }
 
+  if (slug !== fragrance.slug) {
+    return <Navigate to={`/produtos/${fragrance.slug}`} replace />;
+  }
+
   const hasNotes = Object.values(fragrance.olfactoryNotes).some(
     (notes) => notes.length > 0
   );
@@ -67,12 +71,15 @@ function ProductDetail() {
         description={fragrance.seo.description}
         path={`/produtos/${fragrance.slug}`}
         type="product"
+        image={fragrance.catalogArtwork.src}
+        imageAlt={`Perfumes ${fragrance.name} Vanity Pet nas apresentações de 50 ml e 500 ml`}
         schema={{
           "@context": "https://schema.org",
           "@type": "Product",
           name: fragrance.name,
           description: fragrance.seo.description,
           image: `https://www.vanitypet.com.br${fragrance.catalogArtwork.src}`,
+          url: `https://www.vanitypet.com.br/produtos/${fragrance.slug}`,
           brand: { "@type": "Brand", name: "Vanity Pet" },
           category: "Perfume pet",
           additionalProperty: [
@@ -105,7 +112,7 @@ function ProductDetail() {
               <img
                 className={styles.catalogArtwork}
                 src={fragrance.catalogArtwork.src}
-                alt={`${fragrance.name}: frascos de 50 ml e 500 ml apresentados juntos`}
+                alt={`Perfume ${fragrance.name} Vanity Pet em frascos de 50 ml e 500 ml`}
                 width={fragrance.catalogArtwork.width}
                 height={fragrance.catalogArtwork.height}
                 decoding="async"

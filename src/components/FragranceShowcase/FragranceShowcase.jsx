@@ -14,7 +14,7 @@ function FragranceShowcase({
       <div className={styles.media}>
         <img
           src={product.catalogArtwork.src}
-          alt={`${product.name}: frascos de 50 ml e 500 ml apresentados juntos`}
+          alt={`Perfume ${product.name} Vanity Pet em frascos de 50 ml e 500 ml`}
           width={product.catalogArtwork.width}
           height={product.catalogArtwork.height}
           loading="lazy"

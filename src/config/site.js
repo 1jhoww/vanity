@@ -6,6 +6,18 @@ export const brandInfo = Object.freeze({
     "A Vanity Pet é uma marca da Orion Ind e Com de Cosmeticos Ltda."
 });
 
+export const siteInfo = Object.freeze({
+  name: brandInfo.name,
+  alternateName: "Vanity Pet Oficial",
+  baseUrl: "https://www.vanitypet.com.br",
+  title: "Vanity Pet | Perfumaria e Cosméticos para Pets",
+  description:
+    "Vanity Pet é uma marca de perfumaria e cosméticos para cães e gatos, com fragrâncias importadas e fórmulas hipoalergênicas para cuidado e finalização.",
+  socialImage: "/images/home/hero-vanity-pet.png",
+  socialImageAlt:
+    "Perfumes Vanity Pet ao lado de um cão em uma composição preta e dourada"
+});
+
 export const companyInfo = Object.freeze({
   legalName: "Orion Ind e Com de Cosmeticos Ltda",
   cnpj: "41.994.699/0001-30",

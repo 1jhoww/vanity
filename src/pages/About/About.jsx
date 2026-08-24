@@ -11,6 +11,8 @@ function About() {
         title="A Marca"
         description="Conheça a Vanity Pet, perfumaria pet premium com fragrâncias importadas e fórmulas hipoalergênicas para cães e gatos."
         path="/a-marca"
+        image="/images/about/about-opening-products.png"
+        imageAlt="Frascos de perfumes Vanity Pet em composição editorial sobre fundo preto"
       />
 
       <section className={styles.opening} aria-labelledby="about-title">

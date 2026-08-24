@@ -13,6 +13,9 @@ function NotFound() {
         title="Página não encontrada"
         description="A página que você procura não foi encontrada."
         path="/404"
+        image={null}
+        robots="noindex,follow"
+        canonical={false}
       />
       <section className={styles.notFound}>
         <Container className={styles.inner}>

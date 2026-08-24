@@ -5,7 +5,7 @@ import Button, {
 import Container from "../../components/Container/Container";
 import Reveal from "../../components/Reveal/Reveal";
 import SEO from "../../components/SEO/SEO";
-import { contactInfo } from "../../config/site";
+import { brandInfo, contactInfo, siteInfo } from "../../config/site";
 import styles from "./Home.module.css";
 
 const fragranceGroups = [
@@ -16,7 +16,7 @@ const fragranceGroups = [
     description:
       "Composições importadas de alta qualidade, delicadas e elegantes, para uma assinatura marcante com acabamento sofisticado.",
     file: "florais",
-    alt: "Perfumes Flowers de 500 ml e 50 ml entre flores roxas"
+    alt: "Perfumes Flowers Vanity Pet de 500 ml e 50 ml entre flores roxas"
   },
   {
     familyId: "fruity",
@@ -26,7 +26,7 @@ const fragranceGroups = [
       "Perfis vibrantes que unem matérias-primas selecionadas, personalidade e uma formulação delicada para o cuidado diário.",
     file: "frutadas-novo",
     hasWebp: false,
-    alt: "Perfumes Mango de 500 ml e Strawberry de 50 ml entre frutas"
+    alt: "Perfumes Mango e Strawberry Vanity Pet entre frutas"
   },
   {
     familyId: "gourmand",
@@ -35,7 +35,7 @@ const fragranceGroups = [
     description:
       "Acordes envolventes e acolhedores para uma experiência de perfumaria pet premium, marcante e memorável.",
     file: "doces",
-    alt: "Perfumes Sweet de 500 ml e Illusion de 50 ml com chocolate, baunilha e caramelo"
+    alt: "Perfumes Sweet e Illusion Vanity Pet com chocolate, baunilha e caramelo"
   },
   {
     familyId: "fresh",
@@ -45,7 +45,7 @@ const fragranceGroups = [
       "Fragrâncias importadas de perfil leve e luminoso, com frescor limpo e acabamento contemporâneo.",
     file: "citricas-novo",
     hasWebp: false,
-    alt: "Perfumes Explosion de 500 ml e Citric de 50 ml com frutas cítricas"
+    alt: "Perfumes Explosion e Citric Vanity Pet com frutas cítricas"
   },
   {
     familyId: "intense",
@@ -54,7 +54,7 @@ const fragranceGroups = [
     description:
       "Assinaturas de alta perfumaria, com presença marcante e sofisticação para uma finalização inesquecível.",
     file: "intensas",
-    alt: "Perfumes Gold de 500 ml e Black Vanity de 50 ml em composição preta e dourada"
+    alt: "Perfumes Gold e Black Vanity da Vanity Pet em composição preta e dourada"
   }
 ];
 
@@ -62,24 +62,41 @@ function Home() {
   return (
     <>
       <SEO
-        description="Vanity Pet: perfumaria pet premium com fragrâncias importadas e fórmulas hipoalergênicas para cães e gatos."
+        title={siteInfo.title}
+        titleTemplate={false}
+        description={siteInfo.description}
         path="/"
         schema={{
           "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Vanity Pet",
-          url: "https://www.vanitypet.com.br",
-          logo: "https://www.vanitypet.com.br/brand/vanity-pet-logo.png",
-          email: contactInfo.email,
-          telephone: `+${contactInfo.phoneRaw}`,
-          sameAs: [contactInfo.instagramUrl],
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "customer service",
-            telephone: `+${contactInfo.phoneRaw}`,
-            email: contactInfo.email,
-            availableLanguage: "Portuguese"
-          }
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": `${siteInfo.baseUrl}/#organization`,
+              name: siteInfo.name,
+              url: `${siteInfo.baseUrl}/`,
+              logo: `${siteInfo.baseUrl}/brand/vanity-pet-logo.png`,
+              email: contactInfo.email,
+              telephone: `+${contactInfo.phoneRaw}`,
+              sameAs: [contactInfo.instagramUrl],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                telephone: `+${contactInfo.phoneRaw}`,
+                email: contactInfo.email,
+                availableLanguage: "Portuguese"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${siteInfo.baseUrl}/#website`,
+              name: siteInfo.name,
+              alternateName: siteInfo.alternateName,
+              url: `${siteInfo.baseUrl}/`,
+              publisher: {
+                "@id": `${siteInfo.baseUrl}/#organization`
+              }
+            }
+          ]
         }}
       />
 
@@ -98,11 +115,12 @@ function Home() {
           <div className={styles.heroCopy}>
             <span className={styles.heroKicker}>Perfumaria pet premium</span>
             <h1>
-              Presença que <span>deixa marca.</span>
+              Vanity <span>Pet</span>
             </h1>
             <p>
-              Fragrâncias importadas e fórmulas hipoalergênicas para uma
-              experiência de perfumaria pet sofisticada.
+              Presença que deixa marca. Fragrâncias importadas e fórmulas
+              hipoalergênicas para uma experiência de perfumaria pet
+              sofisticada.
             </p>
             <div className={styles.heroActions}>
               <Button to="/fragrancias">Conheça os perfumes</Button>
@@ -122,8 +140,9 @@ function Home() {
           </Reveal>
           <Reveal className={styles.introCopy} delay={80}>
             <p>
-              Descubra fragrâncias importadas de alta qualidade, com fórmulas
-              hipoalergênicas e apresentações para o cuidado pessoal e
+              {brandInfo.legalRelationship} A marca é dedicada à perfumaria e
+              aos cosméticos para cães e gatos, com fragrâncias importadas,
+              fórmulas hipoalergênicas e apresentações para o cuidado pessoal e
               profissional.
             </p>
             <TextLink to="/fragrancias">
