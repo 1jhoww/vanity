@@ -6,6 +6,7 @@ import FragranceShowcase from "../../components/FragranceShowcase/FragranceShowc
 import Reveal from "../../components/Reveal/Reveal";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import SEO from "../../components/SEO/SEO";
+import { siteInfo } from "../../config/site";
 import { fragrances, getInspirationText } from "../../data/products";
 import styles from "./ProductDetail.module.css";
 
@@ -78,8 +79,8 @@ function ProductDetail() {
           "@type": "Product",
           name: fragrance.name,
           description: fragrance.seo.description,
-          image: `https://www.vanitypet.com.br${fragrance.catalogArtwork.src}`,
-          url: `https://www.vanitypet.com.br/produtos/${fragrance.slug}`,
+          image: `${siteInfo.baseUrl}${fragrance.catalogArtwork.src}`,
+          url: `${siteInfo.baseUrl}/produtos/${fragrance.slug}`,
           brand: { "@type": "Brand", name: "Vanity Pet" },
           category: "Perfume pet",
           additionalProperty: [

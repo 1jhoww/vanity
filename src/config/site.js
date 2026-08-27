@@ -9,7 +9,7 @@ export const brandInfo = Object.freeze({
 export const siteInfo = Object.freeze({
   name: brandInfo.name,
   alternateName: "Vanity Pet Oficial",
-  baseUrl: "https://www.vanitypet.com.br",
+  baseUrl: "https://www.vanitypetoficial.com.br",
   title: "Vanity Pet | Perfumaria e Cosméticos para Pets",
   description:
     "Vanity Pet é uma marca de perfumaria e cosméticos para cães e gatos, com fragrâncias importadas e fórmulas hipoalergênicas para cuidado e finalização.",
